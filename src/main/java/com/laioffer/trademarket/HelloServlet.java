@@ -19,7 +19,7 @@ public class HelloServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
         out.println("<h1>" + message + "</h1>");
-        // delete message dup
+        // delete message dup 2nd time
         out.println("</body></html>");
     }
 
