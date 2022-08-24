@@ -17,6 +17,7 @@ public class User implements Serializable {
     private String phoneNumber;
     private boolean enabled;
 
+    // Need to review!! What's going on!
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Post> postList;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
