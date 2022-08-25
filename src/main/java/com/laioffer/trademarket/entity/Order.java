@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
@@ -24,8 +25,10 @@ public class Order implements Serializable {
     @JoinColumn(unique = true)
     private Post post;
 
+
+
     @Temporal(TemporalType.TIMESTAMP)
-    private java.util.Date createTimeStamp;
+    private java.sql.Timestamp timestampAtCreation;
 
     private boolean paid;
 
@@ -55,12 +58,12 @@ public class Order implements Serializable {
         this.post = post;
     }
 
-    public Date getCreateTimeStamp() {
-        return createTimeStamp;
+    public Timestamp getTimestampAtCreation() {
+        return timestampAtCreation;
     }
 
-    public void setCreateTimeStamp(Date createTimeStamp) {
-        this.createTimeStamp = createTimeStamp;
+    public void setTimestampAtCreation(Timestamp timestampAtCreation) {
+        this.timestampAtCreation = timestampAtCreation;
     }
 
     public boolean isPaid() {
