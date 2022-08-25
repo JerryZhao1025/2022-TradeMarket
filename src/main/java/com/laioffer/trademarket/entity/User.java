@@ -11,6 +11,8 @@ public class User implements Serializable {
     private static final long serialVersionUID = 2652327633296064143L;
 
     @Id
+    private String username;
+    @JoinColumn(unique = true)
     private String email;
     private String lastname;
     private String firstname;
@@ -26,6 +28,14 @@ public class User implements Serializable {
     private List<Post> favoriteList;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Order> historyOrderList;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getLastname() {
         return lastname;
