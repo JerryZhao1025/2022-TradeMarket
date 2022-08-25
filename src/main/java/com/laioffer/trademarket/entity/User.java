@@ -24,6 +24,8 @@ public class User implements Serializable {
     private List<Post> myCart;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Post> favoriteList;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    private List<Order> historyOrderList;
 
     public String getLastname() {
         return lastname;
@@ -95,5 +97,13 @@ public class User implements Serializable {
 
     public void setFavoriteList(List<Post> favoriteList) {
         this.favoriteList = favoriteList;
+    }
+
+    public List<Order> getHistoryOrderList() {
+        return historyOrderList;
+    }
+
+    public void setHistoryOrderList(List<Order> historyOrderList) {
+        this.historyOrderList = historyOrderList;
     }
 }
