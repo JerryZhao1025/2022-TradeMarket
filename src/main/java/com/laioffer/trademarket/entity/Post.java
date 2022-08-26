@@ -22,18 +22,21 @@ public class Post implements Serializable{
 
     private String description;
 
-    private Timestamp date;
+    private Timestamp postTime;
 
     private boolean soldStatus;
 
     private double price;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Order order;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Image> images;
 
     @ManyToOne
     @JsonIgnore
-    private User user;
+    private User owner;
 
     public int getId() {
         return id;
@@ -59,12 +62,12 @@ public class Post implements Serializable{
         this.description = description;
     }
 
-    public Timestamp getDate() {
-        return date;
+    public Timestamp getPostTime() {
+        return postTime;
     }
 
-    public void setDate(Timestamp date) {
-        this.date = date;
+    public void setPostTime(Timestamp postTime) {
+        this.postTime = postTime;
     }
 
     public boolean getSoldStatus() {
@@ -91,12 +94,19 @@ public class Post implements Serializable{
         this.images = images;
     }
 
-    public User getUser() {
-        return user;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setUser(User owner) {
-        this.user = owner;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
 }
