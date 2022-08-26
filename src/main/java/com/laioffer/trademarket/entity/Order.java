@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 4293887464938867671L;
@@ -19,20 +19,18 @@ public class Order implements Serializable {
 
     @ManyToOne
     @JsonIgnore
-    private User user;
+    private User buyer;
+
+    @ManyToOne
+    @JsonIgnore
+    private User seller;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(unique = true)
     private Post post;
 
-
-
     @Temporal(TemporalType.TIMESTAMP)
-    private java.sql.Timestamp timestampAtCreation;
-
-    private boolean paid;
-
-    private boolean shipped;
+    private Timestamp timestampAtCreation;
 
     public int getId() {
         return id;
@@ -40,14 +38,6 @@ public class Order implements Serializable {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Post getPost() {
@@ -66,19 +56,19 @@ public class Order implements Serializable {
         this.timestampAtCreation = timestampAtCreation;
     }
 
-    public boolean isPaid() {
-        return paid;
+    public User getBuyer() {
+        return buyer;
     }
 
-    public void setPaid(boolean paid) {
-        this.paid = paid;
+    public void setBuyer(User buyer) {
+        this.buyer = buyer;
     }
 
-    public boolean isShipped() {
-        return shipped;
+    public User getSeller() {
+        return seller;
     }
 
-    public void setShipped(boolean shipped) {
-        this.shipped = shipped;
+    public void setSeller(User seller) {
+        this.seller = seller;
     }
 }
