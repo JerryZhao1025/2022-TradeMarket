@@ -116,4 +116,5 @@ public class User implements Serializable {
     public void setHistoryOrderList(List<Order> historyOrderList) {
         this.historyOrderList = historyOrderList;
     }
+    // comments
 }
