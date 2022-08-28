@@ -12,11 +12,14 @@ public class User implements Serializable {
 
     @Id
     private String username;
-    @JoinColumn(unique = true)
-    private String email;
-    private String lastname;
-    private String firstname;
     private String password;
+
+    private String firstname;
+    private String lastname;
+
+    @Column(unique = true)
+    private String email;
+
     private String phoneNumber;
     private boolean enabled;
 
@@ -27,7 +30,9 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Post> favoriteList;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    private List<Order> historyOrderList;
+    private List<Order> purchaseHistory;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    private List<Order> sellingHistory;
 
     public String getUsername() {
         return username;
@@ -37,12 +42,12 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getPassword() {
+        return password;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstname() {
@@ -53,12 +58,12 @@ public class User implements Serializable {
         this.firstname = firstname;
     }
 
-    public String getPassword() {
-        return password;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public String getEmail() {
@@ -77,7 +82,7 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public boolean isEnabled() {
+    public boolean getEnabled() {
         return enabled;
     }
 
@@ -109,11 +114,19 @@ public class User implements Serializable {
         this.favoriteList = favoriteList;
     }
 
-    public List<Order> getHistoryOrderList() {
-        return historyOrderList;
+    public List<Order> getPurchaseHistory() {
+        return purchaseHistory;
     }
 
-    public void setHistoryOrderList(List<Order> historyOrderList) {
-        this.historyOrderList = historyOrderList;
+    public void setPurchaseHistory(List<Order> purchaseHistory) {
+        this.purchaseHistory = purchaseHistory;
+    }
+
+    public List<Order> getSellingHistory() {
+        return sellingHistory;
+    }
+
+    public void setSellingHistory(List<Order> sellingHistory) {
+        this.sellingHistory = sellingHistory;
     }
 }
