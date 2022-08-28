@@ -5,15 +5,18 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 2652327633296064143L;
 
     @Id
     private String username;
-    private String password;
+    @JoinColumn(unique = true)
     private String email;
+    private String lastname;
+    private String firstname;
+    private String password;
     private String phoneNumber;
     private boolean enabled;
 
@@ -23,6 +26,8 @@ public class User implements Serializable {
     private List<Post> myCart;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Post> favoriteList;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    private List<Order> historyOrderList;
 
     public String getUsername() {
         return username;
@@ -30,6 +35,22 @@ public class User implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public String getPassword() {
@@ -86,5 +107,13 @@ public class User implements Serializable {
 
     public void setFavoriteList(List<Post> favoriteList) {
         this.favoriteList = favoriteList;
+    }
+
+    public List<Order> getHistoryOrderList() {
+        return historyOrderList;
+    }
+
+    public void setHistoryOrderList(List<Order> historyOrderList) {
+        this.historyOrderList = historyOrderList;
     }
 }
