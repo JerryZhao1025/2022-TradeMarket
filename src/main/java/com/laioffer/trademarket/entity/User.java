@@ -17,7 +17,7 @@ public class User implements Serializable {
     private String firstname;
     private String lastname;
 
-    @JoinColumn(unique = true)
+    @Column(unique = true)
     private String email;
 
     private String phoneNumber;
