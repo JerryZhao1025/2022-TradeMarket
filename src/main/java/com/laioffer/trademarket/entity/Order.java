@@ -30,7 +30,7 @@ public class Order implements Serializable {
     private Post post;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp timestampAtCreation;
+    private Timestamp createdTime;
 
     public int getId() {
         return id;
@@ -48,12 +48,12 @@ public class Order implements Serializable {
         this.post = post;
     }
 
-    public Timestamp getTimestampAtCreation() {
-        return timestampAtCreation;
+    public Timestamp getCreatedTime() {
+        return createdTime;
     }
 
-    public void setTimestampAtCreation(Timestamp timestampAtCreation) {
-        this.timestampAtCreation = timestampAtCreation;
+    public void setCreatedTime(Timestamp createdTime) {
+        this.createdTime = createdTime;
     }
 
     public User getBuyer() {
