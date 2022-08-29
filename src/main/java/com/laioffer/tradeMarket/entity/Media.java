@@ -1,10 +1,9 @@
-package com.laioffer.trademarket.entity;
+package com.laioffer.tradeMarket.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
-
 
 @Entity
 @Table(name = "medias")

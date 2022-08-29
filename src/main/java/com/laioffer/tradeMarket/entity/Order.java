@@ -1,11 +1,10 @@
-package com.laioffer.trademarket.entity;
+package com.laioffer.tradeMarket.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Entity
 @Table(name = "orders")
@@ -29,7 +28,6 @@ public class Order implements Serializable {
     @JoinColumn(unique = true)
     private Post post;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private Timestamp createdTime;
 
     public int getId() {

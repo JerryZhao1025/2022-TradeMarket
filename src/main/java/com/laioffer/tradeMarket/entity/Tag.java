@@ -1,4 +1,4 @@
-package com.laioffer.trademarket.entity;
+package com.laioffer.tradeMarket.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;

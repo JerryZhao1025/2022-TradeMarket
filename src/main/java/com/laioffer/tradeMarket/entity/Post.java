@@ -1,11 +1,10 @@
-package com.laioffer.trademarket.entity;
+package com.laioffer.tradeMarket.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.Set;
 
 
@@ -121,4 +120,5 @@ public class Post implements Serializable{
     public void setOwner(User owner) {
         this.owner = owner;
     }
+
 }
