@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -22,18 +23,24 @@ public class Post implements Serializable{
 
     private String description;
 
-    private Timestamp date;
+    private Timestamp postTime;
 
     private boolean soldStatus;
 
     private double price;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Order order;
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    private List<Image> images;
+    private Set<Media> medias;
 
     @ManyToOne
     @JsonIgnore
-    private User user;
+    private User owner;
+
+    @ManyToMany(mappedBy = "posts")
+    private Set<Tag> tags;
 
     public int getId() {
         return id;
@@ -59,12 +66,12 @@ public class Post implements Serializable{
         this.description = description;
     }
 
-    public Timestamp getDate() {
-        return date;
+    public Timestamp getPostTime() {
+        return postTime;
     }
 
-    public void setDate(Timestamp date) {
-        this.date = date;
+    public void setPostTime(Timestamp postTime) {
+        this.postTime = postTime;
     }
 
     public boolean getSoldStatus() {
@@ -83,20 +90,35 @@ public class Post implements Serializable{
         this.price = price;
     }
 
-    public List<Image> getImages() {
-        return images;
+    public Set<Media> getMedias() {
+        return medias;
     }
 
-    public void setImages(List<Image> images) {
-        this.images = images;
+    public void setMedias(Set<Media> medias) {
+        this.medias = medias;
     }
 
-    public User getUser() {
-        return user;
+    public Set<Tag> getTags() {
+        return tags;
     }
 
-    public void setUser(User owner) {
-        this.user = owner;
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
 }

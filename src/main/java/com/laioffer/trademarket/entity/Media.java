@@ -7,8 +7,8 @@ import java.io.Serializable;
 
 
 @Entity
-@Table(name = "images")
-public class Image implements Serializable {
+@Table(name = "medias")
+public class Media implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -17,6 +17,8 @@ public class Image implements Serializable {
     private int id;
 
     private String url;
+
+    private String format;
 
     @ManyToOne
     @JsonIgnore
@@ -44,5 +46,13 @@ public class Image implements Serializable {
 
     public void setPost(Post post) {
         this.post = post;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
     }
 }
