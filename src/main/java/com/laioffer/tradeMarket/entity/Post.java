@@ -1,11 +1,11 @@
-package com.laioffer.trademarket.entity;
+package com.laioffer.tradeMarket.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -28,12 +28,12 @@ public class Post implements Serializable{
 
     private double price;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    private List<Image> images;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private Set<Image> images;
 
     @ManyToOne
     @JsonIgnore
-    private User user;
+    private User owner;
 
     public int getId() {
         return id;
@@ -83,20 +83,19 @@ public class Post implements Serializable{
         this.price = price;
     }
 
-    public List<Image> getImages() {
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public Set<Image> getImages() {
         return images;
     }
 
-    public void setImages(List<Image> images) {
+    public void setImages(Set<Image> images) {
         this.images = images;
     }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User owner) {
-        this.user = owner;
-    }
-
 }
