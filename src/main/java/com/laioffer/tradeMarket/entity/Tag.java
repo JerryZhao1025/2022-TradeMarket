@@ -2,10 +2,11 @@ package com.laioffer.tradeMarket.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "tags")
+@Table(name = "allTags")
 public class Tag implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -14,8 +15,8 @@ public class Tag implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @ManyToMany(mappedBy = "tags")
-    private Set<Post> posts;
+    @ManyToMany(mappedBy = "appendTags")
+    private Set<Post> posts = new HashSet<>();
 
     private String tagName;
 

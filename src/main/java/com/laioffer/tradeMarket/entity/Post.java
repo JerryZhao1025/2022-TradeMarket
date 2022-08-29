@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -38,8 +39,13 @@ public class Post implements Serializable{
     @JsonIgnore
     private User owner;
 
-    @ManyToMany(mappedBy = "posts")
-    private Set<Tag> tags;
+    @ManyToMany
+    @JoinTable(
+            name = "postsToTags",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private Set<Tag> appendTags = new HashSet<>();
 
     public int getId() {
         return id;
@@ -97,12 +103,12 @@ public class Post implements Serializable{
         this.medias = medias;
     }
 
-    public Set<Tag> getTags() {
-        return tags;
+    public Set<Tag> getAppendTags() {
+        return appendTags;
     }
 
-    public void setTags(Set<Tag> tags) {
-        this.tags = tags;
+    public void setAppendTags(Set<Tag> appendTags) {
+        this.appendTags = appendTags;
     }
 
     public Order getOrder() {
