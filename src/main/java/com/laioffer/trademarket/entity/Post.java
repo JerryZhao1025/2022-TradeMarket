@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -32,11 +33,14 @@ public class Post implements Serializable{
     private Order order;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    private List<Image> images;
+    private Set<Media> medias;
 
     @ManyToOne
     @JsonIgnore
     private User owner;
+
+    @ManyToMany(mappedBy = "posts")
+    private Set<Tag> tags;
 
     public int getId() {
         return id;
@@ -86,12 +90,20 @@ public class Post implements Serializable{
         this.price = price;
     }
 
-    public List<Image> getImages() {
-        return images;
+    public Set<Media> getMedias() {
+        return medias;
     }
 
-    public void setImages(List<Image> images) {
-        this.images = images;
+    public void setMedias(Set<Media> medias) {
+        this.medias = medias;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 
     public Order getOrder() {
