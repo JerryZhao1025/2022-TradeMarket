@@ -14,12 +14,12 @@ public class PostService {
         this.postDao = postDao;
     }
 
-    public void editPost(int postID, Post newPost) {
-        postDao.editPost(postID, newPost);
-        // update current post info based on new post
+    public void addPost(Post post) {
+
     }
 
-    public void addPost(Post post) {
+    public void editPost(int postID, Post newPost) {
+        postDao.editPost(postID, newPost);
     }
 
     public void deletePost(int postID) {
