@@ -15,7 +15,7 @@ public class PostService {
     }
 
     public void addPost(Post post) {
-
+        postDao.addPost(post);
     }
 
     public void editPost(int postID, Post newPost) {

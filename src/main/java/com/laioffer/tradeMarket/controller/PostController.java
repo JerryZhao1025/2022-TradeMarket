@@ -25,7 +25,6 @@ public class PostController {
                          HttpServletResponse response) {
         postService.addPost(post);
     }
-
     @RequestMapping(value = {"/post/{postID}/edit"}, method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
     public void editPost(@PathVariable("postID") int postID, @RequestBody Post post,

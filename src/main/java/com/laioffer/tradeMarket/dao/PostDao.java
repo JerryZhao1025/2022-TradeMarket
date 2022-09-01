@@ -30,7 +30,22 @@ public class PostDao {
     }
 
     public void addPost(Post newPost) {
+        Session session = null;
 
+        try{
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.save(newPost);
+            session.getTransaction().commit();
+
+        } catch (Exception ex){
+            ex.printStackTrace();
+            if(session != null) session.getTransaction().rollback();
+        } finally {
+            if (session != null){
+                session.close();
+            }
+        }
     }
 
     public void editPost(int postID, Post newPost) {
