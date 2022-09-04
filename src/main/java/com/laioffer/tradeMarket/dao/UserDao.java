@@ -45,8 +45,6 @@ public class UserDao {
                 session.close();
             }
         }
-
-
     }
 
     public User getUserByUsername(String username) {
@@ -61,10 +59,6 @@ public class UserDao {
             exception.printStackTrace();
             if (session != null) {
                 session.getTransaction().rollback();
-            }
-        } finally {
-            if (session != null) {
-                session.close();
             }
         }
         return user;
@@ -95,7 +89,4 @@ public class UserDao {
         }
         return user;
     }
-
-
-
 }

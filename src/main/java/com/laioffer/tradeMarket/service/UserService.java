@@ -1,7 +1,6 @@
 package com.laioffer.tradeMarket.service;
 
 import com.laioffer.tradeMarket.dao.UserDao;
-import com.laioffer.tradeMarket.entity.Post;
 import com.laioffer.tradeMarket.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,7 @@ public class UserService {
     private UserDao userDao;
 
     public void signUp(User user) throws Exception {
-        User existingUser = getUserByUsername(user.getUsername());
+        User existingUser = getUser(user.getUsername());
         if (existingUser != null) {
             throw new Exception("Username already exists!");
         }
@@ -37,7 +36,7 @@ public class UserService {
         }
     }
 
-    public User getUserByUsername(String username) {
+    public User getUser(String username) {
         return userDao.getUserByUsername(username);
     }
 
