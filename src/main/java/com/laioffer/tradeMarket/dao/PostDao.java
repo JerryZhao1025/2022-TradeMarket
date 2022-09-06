@@ -81,6 +81,23 @@ public class PostDao {
     }
 
     public void deletePost(int postID) {
+        Post post = getPostById(postID);
+        Session session = null;
+        try{
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.delete(post);
+            session.getTransaction().commit();
+        } catch (Exception e){
+            e.printStackTrace();
+            if(session != null){
+                session.getTransaction().rollback();
+            }
 
+        } finally {
+            if(session != null){
+                session.close();
+            }
+        }
     }
 }

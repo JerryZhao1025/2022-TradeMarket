@@ -23,6 +23,6 @@ public class PostService {
     }
 
     public void deletePost(int postID) {
-
+        postDao.deletePost(postID);
     }
 }
