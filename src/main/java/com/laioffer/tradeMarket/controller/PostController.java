@@ -2,7 +2,9 @@ package com.laioffer.tradeMarket.controller;
 
 import com.laioffer.tradeMarket.entity.Media;
 import com.laioffer.tradeMarket.entity.Post;
+import com.laioffer.tradeMarket.entity.Tag;
 import com.laioffer.tradeMarket.service.PostService;
+import com.laioffer.tradeMarket.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -14,9 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 public class PostController {
     private final PostService postService;
 
+    private TagService tagService;
     @Autowired
-    public PostController(PostService postService) {
+    public PostController(PostService postService, TagService tagService) {
         this.postService = postService;
+        this.tagService = tagService;
     }
 
     @RequestMapping(value = {"/post/newPost"}, method = RequestMethod.POST)
@@ -37,6 +41,20 @@ public class PostController {
     public void deletePost(@PathVariable("postID") int postID, @RequestBody Post post,
                          HttpServletResponse response) {
         postService.deletePost(postID);
+    }
+
+    @RequestMapping(value = {"/post/{postID}/addTag/{tagID}"}, method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.OK)
+    public void addTag(@PathVariable("postID") int postId, @PathVariable("tagID") int tagId,
+                       HttpServletResponse response) {
+        tagService.addTag(tagId, postId);
+    }
+
+    @RequestMapping(value = {"/post/{postID}/removeTag/{tagID}"}, method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.OK)
+    public void removeTag(@PathVariable("postID") int postId, @PathVariable("tagID") int tagId,
+                          HttpServletResponse response) {
+        tagService.removeTag(tagId, postId);
     }
 
     // =========================坚决不要动这下面的code，让做media的同学自己搞，不然可能会有冲突=============================
