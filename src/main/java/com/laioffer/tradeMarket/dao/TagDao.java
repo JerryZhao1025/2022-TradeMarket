@@ -40,7 +40,7 @@ public class TagDao {
             post.getAppendTags().add(tag);
 
             session.beginTransaction();
-            session.save(tag);
+            session.update(post);
             session.getTransaction().commit();
         } catch (Exception ex){
             ex.printStackTrace();
@@ -61,7 +61,7 @@ public class TagDao {
             post.getAppendTags().remove(tag);
 
             session.beginTransaction();
-            session.remove(tag);
+            session.update(post);
             session.getTransaction().commit();
         } catch (Exception ex){
             ex.printStackTrace();
@@ -70,8 +70,5 @@ public class TagDao {
             if (session != null) session.close();
         }
     }
-
-
-
-
 }
+
