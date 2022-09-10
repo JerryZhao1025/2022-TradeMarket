@@ -37,6 +37,7 @@ public class PostController {
     @ResponseStatus(value = HttpStatus.OK)
     public void deletePost(@PathVariable("postID") int postID, @RequestBody Post post,
                          HttpServletResponse response) {
+        postService.deletePost(postID);
         // logic Tire
 //        postService.method(att1, attr2);
     }
