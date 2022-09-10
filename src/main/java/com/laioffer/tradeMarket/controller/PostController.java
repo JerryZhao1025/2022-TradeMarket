@@ -17,10 +17,7 @@ public class PostController {
     private final PostService postService;
 
     private TagService tagService;
-<<<<<<< HEAD
 
-=======
->>>>>>> da52b3e (post controller init)
     @Autowired
     public PostController(PostService postService, TagService tagService) {
         this.postService = postService;
@@ -47,7 +44,6 @@ public class PostController {
         postService.deletePost(postID);
     }
 
-<<<<<<< HEAD
 
     @RequestMapping(value = {"/post/{postID}/addTag"}, method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
@@ -56,11 +52,6 @@ public class PostController {
         tagService.addTag(tagId, postId);
     }
 
-    @RequestMapping(value = {"/post/{postID}/removeTag"}, method = RequestMethod.POST)
-    @ResponseStatus(value = HttpStatus.OK)
-    public void removeTag(@PathVariable("postID") int tagId, int postId, @RequestBody Tag tag,
-                       HttpServletResponse response) {
-=======
     @RequestMapping(value = {"/post/{postID}/addTag/{tagID}"}, method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
     public void addTag(@PathVariable("postID") int postId, @PathVariable("tagID") int tagId,
@@ -72,16 +63,12 @@ public class PostController {
     @ResponseStatus(value = HttpStatus.OK)
     public void removeTag(@PathVariable("postID") int postId, @PathVariable("tagID") int tagId,
                           HttpServletResponse response) {
->>>>>>> da52b3e (post controller init)
         tagService.removeTag(tagId, postId);
     }
 
     // =========================坚决不要动这下面的code，让做media的同学自己搞，不然可能会有冲突=============================
 
-<<<<<<< HEAD
 
-=======
->>>>>>> da52b3e (post controller init)
     @RequestMapping(value = {"/post/{postID}/addMedia"}, method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
     public void addMedia(@PathVariable("postID") int postID, @RequestBody Media media,
