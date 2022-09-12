@@ -7,6 +7,9 @@ import com.laioffer.tradeMarket.entity.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Set;
+
 @Service
 public class TagService {
     private final TagDao tagDao;
@@ -23,4 +26,12 @@ public class TagService {
     public void removeTag(int tagId, int postId) {
         tagDao.removeTag(tagId, postId);
     }
+<<<<<<< HEAD
 }
+=======
+
+    public Set<Post> getAllPosts(int tagId){
+        return tagDao.getAllPostsByTagId(tagId);
+    }
+}
+>>>>>>> 8d5793e (Update TagDao, TagService.)

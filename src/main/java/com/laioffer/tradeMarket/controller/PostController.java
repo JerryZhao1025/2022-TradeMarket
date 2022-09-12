@@ -16,8 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 public class PostController {
     private final PostService postService;
 
+<<<<<<< HEAD
     private TagService tagService;
 
+=======
+    private final TagService tagService;
+>>>>>>> 8d5793e (Update TagDao, TagService.)
     @Autowired
     public PostController(PostService postService, TagService tagService) {
         this.postService = postService;
