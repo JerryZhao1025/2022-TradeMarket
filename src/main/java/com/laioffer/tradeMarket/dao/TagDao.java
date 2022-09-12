@@ -8,6 +8,9 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Repository
@@ -70,4 +73,23 @@ public class TagDao {
             if (session != null) session.close();
         }
     }
+
+    public Set<Post> getAllPostsByTagId(int tagId){
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            Tag tag = session.get(Tag.class, tagId);
+            if (tag != null){
+                return tag.getPosts();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (session != null ){
+                session.close();
+            }
+        }
+        return new HashSet<>();
+    }
+
 }

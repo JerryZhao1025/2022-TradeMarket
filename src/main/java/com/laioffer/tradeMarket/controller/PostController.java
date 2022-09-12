@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 public class PostController {
     private final PostService postService;
 
-    private TagService tagService;
+    private final TagService tagService;
     @Autowired
     public PostController(PostService postService, TagService tagService) {
         this.postService = postService;
