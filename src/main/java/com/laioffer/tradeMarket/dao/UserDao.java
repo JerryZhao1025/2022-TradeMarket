@@ -1,5 +1,6 @@
 package com.laioffer.tradeMarket.dao;
 
+<<<<<<< HEAD
 import com.laioffer.tradeMarket.entity.Authorities;
 import com.laioffer.tradeMarket.entity.User;
 import org.hibernate.Criteria;
@@ -16,6 +17,14 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
+
+=======
+import com.laioffer.tradeMarket.entity.Tag;
+import com.laioffer.tradeMarket.entity.User;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserDao {
@@ -96,6 +105,16 @@ public class UserDao {
         return user;
     }
 
-
-
+    public User searchUserByID(int userID){
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            return session.get(User.class, userID);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (session != null) session.close();
+        }
+        return null;
+    }
 }
