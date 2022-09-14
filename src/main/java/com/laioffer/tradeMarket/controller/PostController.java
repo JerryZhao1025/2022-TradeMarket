@@ -3,6 +3,7 @@ package com.laioffer.tradeMarket.controller;
 import com.laioffer.tradeMarket.entity.Media;
 import com.laioffer.tradeMarket.entity.Post;
 import com.laioffer.tradeMarket.entity.Tag;
+import com.laioffer.tradeMarket.entity.User;
 import com.laioffer.tradeMarket.service.PostService;
 import com.laioffer.tradeMarket.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,11 @@ public class PostController {
         tagService.removeTag(tagId, postId);
     }
 
+    @RequestMapping(value = {"/get/user/{userID}"}, method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
+    public User searchUserByUserID(@PathVariable("userID") int userID, HttpServletResponse response){
+        return postService.searchUserByID(userID);
+    }
     // =========================坚决不要动这下面的code，让做media的同学自己搞，不然可能会有冲突=============================
 
     @RequestMapping(value = {"/post/{postID}/addMedia"}, method = RequestMethod.POST)
