@@ -26,9 +26,32 @@ public class SearchController {
 
     @RequestMapping(value = {"/searchByTagId/{tagID}"}, method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
-
     public Set<Post> getPostsByTag(@PathVariable("tagID") int tagId, @RequestBody Tag tag, HttpServletResponse response){
         return tagService.getAllPosts(tagId);
 
     }
+
+    @RequestMapping(value = {"/searchByWord/{keyWord}"}, method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
+    public Set<Post> getPostsByTag(@PathVariable("keyWord") String keyWord, HttpServletResponse response){
+        return tagService.getAllPosts(keyWord);
+
+    }
+
+
+//    @RequestMapping(value = {"/search"}, method = RequestMethod.GET)
+//    @ResponseStatus(value = HttpStatus.OK)
+//    public Set<Post> getPostsByTag(@RequestParam(value = "tag") int tagId, @RequestBody Tag tag, HttpServletResponse response){
+//        return tagService.getAllPosts(tagId);
+//
+//    }
+//
+//    "/search?word=lalala"
+//
+//    @RequestMapping(value = {"/search/word/{keyWord}"}, method = RequestMethod.GET)
+//    @ResponseStatus(value = HttpStatus.OK)
+//    public Set<Post> getPostsByTag(@PathVariable("keyWord") String keyWord, HttpServletResponse response){
+//        return tagService.getAllPosts(keyWord);
+//
+//    }
 }

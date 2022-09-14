@@ -30,4 +30,6 @@ public class TagService {
     public Set<Post> getAllPosts(int tagId){
         return tagDao.getAllPostsByTagId(tagId);
     }
+
+
 }
