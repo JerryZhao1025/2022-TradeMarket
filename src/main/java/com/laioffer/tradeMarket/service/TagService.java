@@ -26,12 +26,8 @@ public class TagService {
     public void removeTag(int tagId, int postId) {
         tagDao.removeTag(tagId, postId);
     }
-<<<<<<< HEAD
-}
-=======
 
     public Set<Post> getAllPosts(int tagId){
         return tagDao.getAllPostsByTagId(tagId);
     }
 }
->>>>>>> 8d5793e (Update TagDao, TagService.)

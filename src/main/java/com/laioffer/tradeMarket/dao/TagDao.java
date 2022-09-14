@@ -73,10 +73,6 @@ public class TagDao {
             if (session != null) session.close();
         }
     }
-<<<<<<< HEAD
-}
-
-=======
 
     public Set<Post> getAllPostsByTagId(int tagId){
         Session session = null;
@@ -97,4 +93,3 @@ public class TagDao {
     }
 
 }
->>>>>>> 8d5793e (Update TagDao, TagService.)

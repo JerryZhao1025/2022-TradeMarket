@@ -6,6 +6,13 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Repository
 public class PostDao {
     private final SessionFactory sessionFactory;
@@ -99,5 +106,24 @@ public class PostDao {
                 session.close();
             }
         }
+    }
+
+    //needs to update
+    public Set<Post> getAllPostsByWord(String word) {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Post> criteriaQuery = builder.createQuery(Post.class);
+            criteriaQuery.from(Post.class);
+            return new HashSet<>(session.createQuery(criteriaQuery).getResultList());
+        } catch (Exception ex){
+            ex.printStackTrace();
+        } finally {
+            if (session != null){
+                session.close();
+            }
+        }
+        return new HashSet<>();
     }
 }
