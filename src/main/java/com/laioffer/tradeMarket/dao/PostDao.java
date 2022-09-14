@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -109,14 +110,17 @@ public class PostDao {
     }
 
     //needs to update
-    public Set<Post> getAllPostsByWord(String word) {
+    public List<Post> getAllPostsByKeyword(String keyword) {
         Session session = null;
         try {
             session = sessionFactory.openSession();
             CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<Post> criteriaQuery = builder.createQuery(Post.class);
-            criteriaQuery.from(Post.class);
-            return new HashSet<>(session.createQuery(criteriaQuery).getResultList());
+            CriteriaQuery<Post> criteria = builder.createQuery(Post.class);
+            Root<Post> posts = criteria.from(Post.class);
+            criteria.where(builder.like(posts.get("title"), "%" + keyword + "%"));
+            // 然后把这个query给session运行并返回结果
+            List<Post> allRelatedPosts = session.createQuery(criteria).getResultList();
+            return allRelatedPosts;
         } catch (Exception ex){
             ex.printStackTrace();
         } finally {
@@ -124,6 +128,6 @@ public class PostDao {
                 session.close();
             }
         }
-        return new HashSet<>();
+        return new ArrayList<>();
     }
 }

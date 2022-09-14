@@ -1,6 +1,7 @@
 package com.laioffer.tradeMarket.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -45,6 +46,7 @@ public class Post implements Serializable{
             joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
+    @JsonIgnore
     private Set<Tag> appendTags = new HashSet<>();
 
     public int getId() {

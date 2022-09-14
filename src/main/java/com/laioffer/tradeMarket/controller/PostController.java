@@ -28,6 +28,7 @@ public class PostController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public void addPost(@RequestBody Post post,
                          HttpServletResponse response) {
+        // TODO: fill in user information into the post
         postService.addPost(post);
     }
     @RequestMapping(value = {"/post/{postID}/edit"}, method = RequestMethod.POST)
@@ -39,8 +40,7 @@ public class PostController {
 
     @RequestMapping(value = {"/post/{postID}/delete"}, method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.OK)
-    public void deletePost(@PathVariable("postID") int postID, @RequestBody Post post,
-                         HttpServletResponse response) {
+    public void deletePost(@PathVariable("postID") int postID, HttpServletResponse response) {
         postService.deletePost(postID);
     }
 
@@ -51,7 +51,7 @@ public class PostController {
         tagService.addTag(tagId, postId);
     }
 
-    @RequestMapping(value = {"/post/{postID}/removeTag/{tagID}"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/post/{postID}/removeTag/{tagID}"}, method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.OK)
     public void removeTag(@PathVariable("postID") int postId, @PathVariable("tagID") int tagId,
                           HttpServletResponse response) {
