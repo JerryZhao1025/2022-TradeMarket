@@ -1,5 +1,7 @@
 package com.laioffer.tradeMarket.entity;
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -15,7 +17,7 @@ public class Tag implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @ManyToMany(mappedBy = "appendTags")
+    @ManyToMany(mappedBy = "appendTags", fetch=FetchType.EAGER)
     private Set<Post> posts = new HashSet<>();
 
     private String tagName;
