@@ -1,7 +1,7 @@
 package com.laioffer.tradeMarket.service;
 
 import com.laioffer.tradeMarket.dao.PostDao;
-<<<<<<< Updated upstream
+
 import com.laioffer.tradeMarket.dao.UserDao;
 import com.laioffer.tradeMarket.entity.Post;
 import com.laioffer.tradeMarket.entity.User;
@@ -11,12 +11,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Set;
 
-=======
 import com.laioffer.tradeMarket.entity.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
->>>>>>> Stashed changes
 @Service
 public class PostService {
     private final PostDao postDao;
@@ -41,7 +39,7 @@ public class PostService {
         postDao.deletePost(postID);
     }
 
-    public List<Post> getAllPostsByKeyword(String word) {
+    public Set<Post> getAllPostsByKeyword(String word) {
         return postDao.getAllPostsByKeyword(word);
     }
 
