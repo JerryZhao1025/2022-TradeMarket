@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -117,7 +118,9 @@ public class PostDao {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Post> criteria = builder.createQuery(Post.class);
             Root<Post> posts = criteria.from(Post.class);
-            criteria.where(builder.like(posts.get("title"), "%" + keyword + "%"));
+            Predicate titleMatch = builder.like(posts.get("title"), "%" + keyword + "%");
+            Predicate descriptionMatch = builder.like(posts.get("description"), "%" + keyword + "%");
+            criteria.where(builder.or(titleMatch, descriptionMatch));
             // 然后把这个query给session运行并返回结果
             Set<Post> allRelatedPosts = new HashSet<>(session.createQuery(criteria).getResultList());
             return allRelatedPosts;
