@@ -32,15 +32,15 @@ public class SignUpController {
     public void signUp(@RequestBody User user, HttpServletResponse response) throws IOException {
         try {
             userService.signUp(user);
-//            response.setStatus(HttpStatus.CREATED.value());
-//
-//            Map<String, Object> claims = new HashMap<>();
-//            claims.put("username", user.getUsername());
-//            claims.put("password", user.getPassword());
-//
-//            Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-//            String jws = Jwts.builder().setClaims(claims).signWith(key).compact();
-//            response.getOutputStream().println(jws);
+            response.setStatus(HttpStatus.CREATED.value());
+
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("username", user.getUsername());
+            claims.put("password", user.getPassword());
+
+            Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+            String jws = Jwts.builder().setClaims(claims).signWith(key).compact();
+            response.getOutputStream().println(jws);
         } catch (Exception exception) {
             response.setStatus(HttpStatus.CONFLICT.value());
             Map<String, Object> data = new HashMap<>();
