@@ -70,6 +70,8 @@ public class PostService {
         URL url = s3Client.getUrl(bucketName, fileName);
         fileObj.delete();
         return url.toString();
+       // return "File uploaded :" + fileName;
+
     }
 
     public byte[] downloadFile(String fileName){

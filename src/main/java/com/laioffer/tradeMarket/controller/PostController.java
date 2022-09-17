@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class PostController {
+    @Autowired
     private final PostService postService;
     private final TagService tagService;
 
@@ -79,11 +80,12 @@ public class PostController {
 
     // =========================坚决不要动这下面的code，让做media的同学自己搞，不然可能会有冲突=============================
 
-
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam(value = "file") MultipartFile file){
-        return new ResponseEntity<>(postService.uploadFile(file), HttpStatus.OK);
+    @ResponseStatus(value = HttpStatus.OK)
+    public void uploadFile(@RequestParam(value = "file") MultipartFile file){
+        postService.uploadFile(file);
     }
+
     @GetMapping("/download/{fileName}")
     public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable String fileName){
         byte[] data = postService.downloadFile(fileName);
