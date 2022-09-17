@@ -22,6 +22,7 @@ public class UserController {
     }
 
     @RequestMapping(value = {"/user/{userID}"}, method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public User searchUserByUserID(@PathVariable("userID") int userID, HttpServletResponse response){
         return postService.searchUserByID(userID);

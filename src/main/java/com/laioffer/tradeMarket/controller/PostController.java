@@ -31,7 +31,8 @@ public class PostController {
         // TODO: fill in user information into the post
         postService.addPost(post);
     }
-    @RequestMapping(value = {"/post/{postID}/edit"}, method = RequestMethod.POST)
+
+    @RequestMapping(value = {"/post/{postID}/edit"}, method = RequestMethod.PATCH)
     @ResponseStatus(value = HttpStatus.CREATED)
     public void editPost(@PathVariable("postID") int postID, @RequestBody Post post,
                          HttpServletResponse response) {
@@ -64,6 +65,13 @@ public class PostController {
     public void removeTag(@PathVariable("postID") int postId, @PathVariable("tagID") int tagId,
                           HttpServletResponse response) {
         tagService.removeTag(tagId, postId);
+    }
+
+    @RequestMapping(value = {"/post/{postID}"}, method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public Post editPost(@PathVariable("postID") int postID, HttpServletResponse response) {
+        return postService.getPost(postID);
     }
 
     // =========================坚决不要动这下面的code，让做media的同学自己搞，不然可能会有冲突=============================

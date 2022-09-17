@@ -21,6 +21,10 @@ public class PostService {
         this.postDao = postDao;
     }
 
+    public Post getPost(int postID) {
+        return postDao.getPostById(postID);
+    }
+
     public void addPost(Post post) {
         postDao.addPost(post);
     }
