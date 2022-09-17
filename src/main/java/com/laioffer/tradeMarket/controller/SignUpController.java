@@ -36,7 +36,14 @@ public class SignUpController {
             claims.put("password", user.getPassword());
 
             Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-            String jws = Jwts.builder().setClaims(claims).signWith(key).compact();
+            String jws = Jwts.builder().setClaims(claims).signWith(key).compact(); // token
+
+            Map<String, Object> claim2 = Jwts.parser().setSigningKey(key).parseClaimsJws(jws).getBody();
+            System.out.println();
+            System.out.println(claim2.get("password"));
+
+
+
             response.getOutputStream().println(jws);
 //            response.setStatus(HttpStatus.CREATED.value());
 //
@@ -47,6 +54,8 @@ public class SignUpController {
 //            Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 //            String jws = Jwts.builder().setClaims(claims).signWith(key).compact();
 //            response.getOutputStream().println(jws);
+            response.getOutputStream().println((String)claim2.get("username"));
+            response.getOutputStream().println((String)claim2.get("password"));
         } catch (Exception exception) {
             response.setStatus(HttpStatus.CONFLICT.value());
             Map<String, Object> data = new HashMap<>();

@@ -45,11 +45,6 @@ public class UserDao {
                 session.close();
             }
         }
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 2038fe1 (Signup feature implemented.)
     }
 
     public User getUserByUsername(String username) {
@@ -65,13 +60,10 @@ public class UserDao {
             if (session != null) {
                 session.getTransaction().rollback();
             }
-<<<<<<< HEAD
-=======
         } finally {
             if (session != null) {
                 session.close();
             }
->>>>>>> 2038fe1 (Signup feature implemented.)
         }
         return user;
     }
@@ -101,10 +93,4 @@ public class UserDao {
         }
         return user;
     }
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> 2038fe1 (Signup feature implemented.)
 }
