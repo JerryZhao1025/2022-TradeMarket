@@ -7,12 +7,12 @@ import com.laioffer.tradeMarket.entity.User;
 import com.laioffer.tradeMarket.service.PostService;
 import com.laioffer.tradeMarket.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
+//import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.http.ResponseEntity;
+//import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+//import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -80,27 +80,27 @@ public class PostController {
 
     // =========================坚决不要动这下面的code，让做media的同学自己搞，不然可能会有冲突=============================
 
-    @PostMapping("/upload")
-    @ResponseStatus(value = HttpStatus.OK)
-    public void uploadFile(@RequestParam(value = "file") MultipartFile file){
-        postService.uploadFile(file);
-    }
-
-    @GetMapping("/download/{fileName}")
-    public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable String fileName){
-        byte[] data = postService.downloadFile(fileName);
-        ByteArrayResource resource = new ByteArrayResource(data);
-        return ResponseEntity
-                .ok()
-                .contentLength(data.length)
-                .header("Content-type", "application/octet-stream")
-                .header("Content-disposition", "attachment; filename = \"" + fileName + "\"")
-                .body(resource);
-    }
-    @DeleteMapping("/delete/{fileName}")
-    public ResponseEntity<String> deleteFile(@PathVariable String fileName){
-        return new ResponseEntity<>(postService.deleteFile(fileName), HttpStatus.OK);
-    }
+//    @PostMapping("/upload")
+//    @ResponseStatus(value = HttpStatus.OK)
+//    public void uploadFile(@RequestParam(value = "file") MultipartFile file){
+//        postService.uploadFile(file);
+//    }
+//
+//    @GetMapping("/download/{fileName}")
+//    public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable String fileName){
+//        byte[] data = postService.downloadFile(fileName);
+//        ByteArrayResource resource = new ByteArrayResource(data);
+//        return ResponseEntity
+//                .ok()
+//                .contentLength(data.length)
+//                .header("Content-type", "application/octet-stream")
+//                .header("Content-disposition", "attachment; filename = \"" + fileName + "\"")
+//                .body(resource);
+//    }
+//    @DeleteMapping("/delete/{fileName}")
+//    public ResponseEntity<String> deleteFile(@PathVariable String fileName){
+//        return new ResponseEntity<>(postService.deleteFile(fileName), HttpStatus.OK);
+//    }
 
 //    @RequestMapping(value = {"/post/{postID}/addMedia"}, method = RequestMethod.POST)
 //    @ResponseStatus(value = HttpStatus.OK)
