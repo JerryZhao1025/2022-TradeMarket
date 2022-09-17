@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 
 import java.util.List;
 import java.util.Set;
@@ -66,8 +67,9 @@ public class PostService {
         File fileObj = convertMultiPartFileToFile(file);
         String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
         s3Client.putObject(new PutObjectRequest(bucketName, fileName, fileObj));
+        URL url = s3Client.getUrl(bucketName, fileName);
         fileObj.delete();
-        return "File uploaded :" + fileName;
+        return url.toString();
     }
 
     public byte[] downloadFile(String fileName){
