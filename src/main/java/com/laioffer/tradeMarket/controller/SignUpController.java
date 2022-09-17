@@ -23,16 +23,12 @@ import java.util.Map;
 public class SignUpController {
     @Autowired
     private UserService userService;
-
-
-
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public void signUp(@RequestBody User user, HttpServletResponse response) throws IOException {
         try {
             userService.signUp(user);
-<<<<<<< HEAD
             response.setStatus(HttpStatus.CREATED.value());
 
             Map<String, Object> claims = new HashMap<>();
@@ -42,7 +38,6 @@ public class SignUpController {
             Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
             String jws = Jwts.builder().setClaims(claims).signWith(key).compact();
             response.getOutputStream().println(jws);
-=======
 //            response.setStatus(HttpStatus.CREATED.value());
 //
 //            Map<String, Object> claims = new HashMap<>();
@@ -52,7 +47,6 @@ public class SignUpController {
 //            Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 //            String jws = Jwts.builder().setClaims(claims).signWith(key).compact();
 //            response.getOutputStream().println(jws);
->>>>>>> 2038fe1 (Signup feature implemented.)
         } catch (Exception exception) {
             response.setStatus(HttpStatus.CONFLICT.value());
             Map<String, Object> data = new HashMap<>();
