@@ -1,6 +1,7 @@
 package com.laioffer.tradeMarket.dao;
 
 import com.laioffer.tradeMarket.entity.Authorities;
+import com.laioffer.tradeMarket.entity.Post;
 import com.laioffer.tradeMarket.entity.User;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -45,29 +46,18 @@ public class UserDao {
                 session.close();
             }
         }
-
-
     }
 
     public User getUserByUsername(String username) {
-        User user = null;
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
-            session.beginTransaction();
-            user = session.get(User.class, username);
-            session.getTransaction().commit();
+        try (Session session = sessionFactory.openSession()) {
+            User user = session.get(User.class, username);
+            if ( user != null) {
+                return user;
+            }
         } catch (Exception exception) {
             exception.printStackTrace();
-            if (session != null) {
-                session.getTransaction().rollback();
-            }
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
-        return user;
+        return null;
     }
 
     public User getUserByEmail(String email) {
@@ -94,18 +84,5 @@ public class UserDao {
             }
         }
         return user;
-    }
-
-    public User searchUserByID(int userID){
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
-            return session.get(User.class, userID);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            if (session != null) session.close();
-        }
-        return null;
     }
 }

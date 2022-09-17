@@ -42,7 +42,5 @@ public class PostService {
         return postDao.getAllPostsByKeyword(word);
     }
 
-    public User searchUserByID(int userID){
-        return userDao.searchUserByID(userID);
-    }
+
 }
