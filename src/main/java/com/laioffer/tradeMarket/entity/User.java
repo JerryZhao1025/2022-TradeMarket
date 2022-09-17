@@ -1,10 +1,13 @@
 package com.laioffer.tradeMarket.entity;
 
+import org.springframework.stereotype.Indexed;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
 @Entity
+@Indexed
 @Table(name = "users")
 public class User implements Serializable {
 
