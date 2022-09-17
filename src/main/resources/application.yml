@@ -1,0 +1,23 @@
+cloud:
+  aws:
+    credentials:
+      access-key =AKIAW4EPRJQSS6W3B2PC
+      secret-key =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
+    region:
+      static: us-west-1
+    stack:
+      auto: false
+
+application:
+  bucket:
+    name: flag-camp-bucket
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2MB
+      max-file-size: 5MB
+      max-request-size: 10MB
+server:
+  port: 8080
