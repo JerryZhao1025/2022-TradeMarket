@@ -31,5 +31,4 @@ public class TagService {
         return tagDao.getAllPostsByTagId(tagId);
     }
 
-
 }

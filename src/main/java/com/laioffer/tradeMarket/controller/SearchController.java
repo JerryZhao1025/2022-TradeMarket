@@ -48,12 +48,5 @@ public class SearchController {
             return null;
         }
    }
-
-//    @RequestMapping(value = "/searchByTagID/{tagID}", method = RequestMethod.GET)
-//    @ResponseStatus(value = HttpStatus.OK)
-//    @ResponseBody
-//    public Set<Post> getPostsByTag(@PathVariable("tagID") int tagId, HttpServletResponse response){
-//        return tagService.getAllPosts(tagId);
-//    }
 }
     

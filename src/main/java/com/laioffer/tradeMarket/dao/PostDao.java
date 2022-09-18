@@ -60,11 +60,16 @@ public class PostDao {
     public void editPost(int postID, Post newPost) {
         Post post = getPostById(postID);
         // 改变post底下的所有参数(仅用户可以改变的部分)
-        post.setTitle(newPost.getTitle());
-        post.setDescription(newPost.getDescription());
-        post.setPrice(newPost.getPrice());
-        post.setMedias(newPost.getMedias());
-        post.setAppendTags(newPost.getAppendTags());
+
+        if (newPost.getTitle() != null) {
+            post.setTitle(newPost.getTitle());
+        }
+        if (newPost.getDescription() != null) {
+            post.setDescription(newPost.getDescription());
+        }
+        if (newPost.getPrice() != 0) {
+            post.setPrice(newPost.getPrice());
+        }
 
         Session session = null;
         try {

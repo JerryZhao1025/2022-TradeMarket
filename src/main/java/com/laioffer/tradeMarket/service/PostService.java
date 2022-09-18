@@ -1,19 +1,13 @@
 package com.laioffer.tradeMarket.service;
 
 import com.laioffer.tradeMarket.dao.PostDao;
-
 import com.laioffer.tradeMarket.dao.UserDao;
 import com.laioffer.tradeMarket.entity.Post;
-import com.laioffer.tradeMarket.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
-
-import com.laioffer.tradeMarket.entity.Post;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class PostService {
@@ -24,6 +18,10 @@ public class PostService {
     public PostService(PostDao postDao, UserDao userDao) {
         this.userDao = userDao;
         this.postDao = postDao;
+    }
+
+    public Post getPost(int postID) {
+        return postDao.getPostById(postID);
     }
 
     public void addPost(Post post) {
@@ -43,7 +41,4 @@ public class PostService {
         return postDao.getAllPostsByKeyword(word);
     }
 
-    public User searchUserByID(int userID){
-        return userDao.searchUserByID(userID);
-    }
 }
