@@ -1,5 +1,6 @@
 package com.laioffer.tradeMarket.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.laioffer.tradeMarket.entity.Authorities;
 import com.laioffer.tradeMarket.entity.User;
 
@@ -14,7 +15,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class SignInController {
@@ -23,21 +27,30 @@ public class SignInController {
     private UserService userService;
     @Autowired
     private TokenService tokenService;
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    @RequestMapping(value = "/signin", method = RequestMethod.POST)
+    public void signIn(@RequestBody User user, HttpServletResponse response) throws IOException {
+        try {
+            User userInDB = userService.getUser(user.getUsername());
+            if (user.getPassword().equals(userInDB.getPassword())) {
 
-    @RequestMapping(value = "/signin", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
-    @ResponseStatus(value = HttpStatus.OK)
-    @ResponseBody
-    public String login(@RequestParam("username") String username, @RequestParam("password") String pwd,
-                                    HttpServletResponse response) {
-        User user = userService.getUser(username);
-        JSONObject result = new JSONObject();
-        // login success
-        if (user != null && user.getPassword().equals(pwd)) {
-            String token = tokenService.getJWTToken(username, pwd);
-            result.put("token", token);
-            return result.toString();
+                response.setStatus(HttpStatus.CREATED.value());
+                String token = tokenService.getJWTToken(user.getUsername());
+                response.getOutputStream().println(token);
+            } else {
+                // wrong password
+                response.setStatus(HttpStatus.CONFLICT.value());
+                Map<String, Object> data = new HashMap<>();
+                data.put("message", "Wrong Password");
+                response.getOutputStream().println(objectMapper.writeValueAsString(data));
+            }
+
+        } catch (Exception exception) {
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            Map<String, Object> data = new HashMap<>();
+            data.put("message", exception.getMessage());
+            response.getOutputStream().println(objectMapper.writeValueAsString(data));
         }
-        // login failed
-        return null;
+
     }
 }

@@ -56,6 +56,7 @@ public class SignUpController {
 //            response.getOutputStream().println(jws);
             response.getOutputStream().println((String)claim2.get("username"));
             response.getOutputStream().println((String)claim2.get("password"));
+
         } catch (Exception exception) {
             response.setStatus(HttpStatus.CONFLICT.value());
             Map<String, Object> data = new HashMap<>();
