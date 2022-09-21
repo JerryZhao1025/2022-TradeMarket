@@ -2,20 +2,16 @@ package com.laioffer.tradeMarket.dao;
 
 import com.laioffer.tradeMarket.entity.Authorities;
 import com.laioffer.tradeMarket.entity.User;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.List;
 
 @Repository
 public class UserDao {
@@ -71,7 +67,6 @@ public class UserDao {
     public User getUserByEmail(String email) {
         User user = null;
         Session session = null;
-
         try {
             session = sessionFactory.openSession();
             CriteriaBuilder builder = session.getCriteriaBuilder();

@@ -21,7 +21,6 @@ public class TokenController {
     @GetMapping("/menus")
     public void hello(HttpServletResponse response, @RequestHeader("Authorization") String token) throws IOException {
         //String token = "eyJhbGciOiJIUzI1NiJ9.eyJ0b2tlbktleSI6IlRoaXMgaXMgb3VyIGtleSBvZiBGTEFHQ0FNUCIsInVzZXJuYW1lIjoiZmZmd3d3bGxsbCJ9.nKbcypsSwJGBUZbOtB2smKR1bNO6GY5nZghmbg2tFkg";
-        token = token.substring(7);
         boolean verifySuccess = tokenService.verify(token);
         if (!verifySuccess) {
 

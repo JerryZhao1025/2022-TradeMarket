@@ -42,18 +42,7 @@ public class SignUpController {
             System.out.println();
             System.out.println(claim2.get("password"));
 
-
-
             response.getOutputStream().println(jws);
-//            response.setStatus(HttpStatus.CREATED.value());
-//
-//            Map<String, Object> claims = new HashMap<>();
-//            claims.put("username", user.getUsername());
-//            claims.put("password", user.getPassword());
-//
-//            Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-//            String jws = Jwts.builder().setClaims(claims).signWith(key).compact();
-//            response.getOutputStream().println(jws);
             response.getOutputStream().println((String)claim2.get("username"));
             response.getOutputStream().println((String)claim2.get("password"));
 
@@ -63,6 +52,5 @@ public class SignUpController {
             data.put("message", exception.getMessage());
             response.getOutputStream().println(objectMapper.writeValueAsString(data));
         }
-
     }
 }
