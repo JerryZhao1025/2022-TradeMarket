@@ -60,16 +60,9 @@ public class PostDao {
     public void editPost(int postID, Post newPost) {
         Post post = getPostById(postID);
         // 改变post底下的所有参数(仅用户可以改变的部分)
-
-        if (newPost.getTitle() != null) {
-            post.setTitle(newPost.getTitle());
-        }
-        if (newPost.getDescription() != null) {
-            post.setDescription(newPost.getDescription());
-        }
-        if (newPost.getPrice() != 0) {
-            post.setPrice(newPost.getPrice());
-        }
+        post.setTitle(newPost.getTitle());
+        post.setDescription(newPost.getDescription());
+        post.setPrice(newPost.getPrice());
 
         Session session = null;
         try {
@@ -78,9 +71,8 @@ public class PostDao {
             //Especially我们在对关系型数据库做改动的时候！！
             session.beginTransaction();
             // 我们这里是改变了post，需要存到数据库里
-            session.saveOrUpdate(post);
+            session.update(post);
             session.getTransaction().commit();
-
         } catch (Exception e) { // for all other db saving exceptions
             e.printStackTrace();
             if (session != null) {

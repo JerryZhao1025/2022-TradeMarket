@@ -35,9 +35,10 @@ public class PostController {
 
     @RequestMapping(value = {"/post/{postID}/edit"}, method = RequestMethod.PATCH)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public void editPost(@PathVariable("postID") int postID, @RequestBody Post post,
+    public void editPost(@PathVariable("postID") int postID, @RequestBody Post newpost,
                          HttpServletResponse response) {
-        postService.editPost(postID, post);
+        postService.editPost(postID, newpost);
+        // 目前仅支持对post的Title, Description和Price做改动
     }
 
     @RequestMapping(value = {"/post/{postID}/delete"}, method = RequestMethod.DELETE)
