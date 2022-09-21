@@ -15,15 +15,14 @@ public class UserService {
     private UserDao userDao;
 
     public void signUp(User user) throws Exception {
-        User existingUser = getUserByUsername(user.getUsername());
+        User existingUser = getUser(user.getUsername());
         if (existingUser != null) {
             throw new Exception("Username already exists!");
         }
-        existingUser = getUserByEmail(user.getEmail());
-        if (existingUser != null) {
+
+        if (userDao.getUserByEmail(user.getEmail()) != null) { // exist current email
             throw new Exception("Email already exists!");
         }
-
 
         user.setEnabled(true);
         user.setPostList(new HashSet<>());
@@ -37,11 +36,16 @@ public class UserService {
         }
     }
 
-    public User getUserByUsername(String username) {
-        return userDao.getUserByUsername(username);
+    public User getUser(String username) {
+        return userDao.getUserByUsername(username); // get all user info
     }
 
-    public User getUserByEmail(String email) {
-        return userDao.getUserByEmail(email);
+    public User getPartUserInfo(String username) {
+        User user = userDao.getUserByUsername(username); // get all user info
+        // remove part information
+        user.setPassword(null);
+        user.setSellingHistory(null);
+        user.setPurchaseHistory(null);
+        return user;
     }
 }

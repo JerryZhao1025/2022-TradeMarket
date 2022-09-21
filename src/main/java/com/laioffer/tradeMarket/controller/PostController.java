@@ -4,6 +4,7 @@ import com.laioffer.tradeMarket.entity.Media;
 import com.laioffer.tradeMarket.entity.Post;
 import com.laioffer.tradeMarket.entity.Tag;
 import com.laioffer.tradeMarket.entity.User;
+
 import com.laioffer.tradeMarket.service.PostService;
 import com.laioffer.tradeMarket.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,6 @@ public class PostController {
     public Post editPost(@PathVariable("postID") int postID, HttpServletResponse response) {
         return postService.getPost(postID);
     }
-
     // =========================坚决不要动这下面的code，让做media的同学自己搞，不然可能会有冲突=============================
 
 

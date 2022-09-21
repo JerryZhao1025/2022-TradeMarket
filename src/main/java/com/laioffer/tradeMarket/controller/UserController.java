@@ -28,7 +28,15 @@ public class UserController {
     @RequestMapping(value = {"/user/{username}"}, method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public User searchUserByUserID(@PathVariable("username") String username, HttpServletResponse response){
-        return userService.getUserByUsername(username);
+    public User searchUserByUsername(@PathVariable("username") String username, HttpServletResponse response){
+        return userService.getUser(username);
     }
+
+    @RequestMapping(value = {"/visit/{username}"}, method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public User searchUserFromVisitorByUsername(@PathVariable("username") String username, HttpServletResponse response){
+        return userService.getPartUserInfo(username);
+    }
+
 }
