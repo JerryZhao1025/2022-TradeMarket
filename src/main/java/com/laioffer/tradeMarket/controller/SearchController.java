@@ -1,7 +1,6 @@
 package com.laioffer.tradeMarket.controller;
 
 import com.laioffer.tradeMarket.entity.Post;
-import com.laioffer.tradeMarket.entity.Tag;
 import com.laioffer.tradeMarket.service.PostService;
 import com.laioffer.tradeMarket.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashSet;
 import java.util.Optional;
-import java.util.List;
 import java.util.Set;
 
 @Controller

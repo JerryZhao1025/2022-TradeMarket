@@ -5,14 +5,12 @@ import com.laioffer.tradeMarket.entity.User;
 import com.laioffer.tradeMarket.service.UserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.crypto.SecretKey;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Key;
@@ -21,9 +19,14 @@ import java.util.Map;
 
 @Controller
 public class SignUpController {
-    @Autowired
-    private UserService userService;
+
+    private final UserService userService;
     private final ObjectMapper objectMapper = new ObjectMapper();
+
+    @Autowired
+    public SignUpController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public void signUp(@RequestBody User user, HttpServletResponse response) throws IOException {

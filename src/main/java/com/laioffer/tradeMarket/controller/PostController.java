@@ -2,8 +2,6 @@ package com.laioffer.tradeMarket.controller;
 
 import com.laioffer.tradeMarket.entity.Media;
 import com.laioffer.tradeMarket.entity.Post;
-import com.laioffer.tradeMarket.entity.Tag;
-import com.laioffer.tradeMarket.entity.User;
 
 import com.laioffer.tradeMarket.service.PostService;
 import com.laioffer.tradeMarket.service.TagService;

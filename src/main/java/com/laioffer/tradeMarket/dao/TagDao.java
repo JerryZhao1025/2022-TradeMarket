@@ -13,8 +13,12 @@ import java.util.Set;
 @Repository
 public class TagDao {
 
+    private final SessionFactory sessionFactory;
+
     @Autowired
-    private SessionFactory sessionFactory;
+    public TagDao(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     public Tag getTag(int tagId) {
         Session session = null;

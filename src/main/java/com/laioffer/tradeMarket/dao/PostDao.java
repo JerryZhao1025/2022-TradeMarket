@@ -10,9 +10,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Repository
@@ -40,13 +38,11 @@ public class PostDao {
 
     public void addPost(Post newPost) {
         Session session = null;
-
         try{
             session = sessionFactory.openSession();
             session.beginTransaction();
             session.save(newPost);
             session.getTransaction().commit();
-
         } catch (Exception ex){
             ex.printStackTrace();
             if(session != null) session.getTransaction().rollback();
@@ -109,9 +105,7 @@ public class PostDao {
 
     //needs to update
     public Set<Post> getAllPostsByKeyword(String keyword) {
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
+        try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Post> criteria = builder.createQuery(Post.class);
             Root<Post> posts = criteria.from(Post.class);
@@ -119,14 +113,9 @@ public class PostDao {
             Predicate descriptionMatch = builder.like(posts.get("description"), "%" + keyword + "%");
             criteria.where(builder.or(titleMatch, descriptionMatch));
             // 然后把这个query给session运行并返回结果
-            Set<Post> allRelatedPosts = new HashSet<>(session.createQuery(criteria).getResultList());
-            return allRelatedPosts;
-        } catch (Exception ex){
+            return new HashSet<>(session.createQuery(criteria).getResultList());
+        } catch (Exception ex) {
             ex.printStackTrace();
-        } finally {
-            if (session != null){
-                session.close();
-            }
         }
         return new HashSet<>();
     }

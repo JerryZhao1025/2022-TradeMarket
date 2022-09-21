@@ -14,14 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class UserController {
-    private final PostService postService;
-    private final TagService tagService;
     private final UserService userService;
 
     @Autowired
     public UserController(PostService postService, TagService tagService, UserService userService) {
-        this.postService = postService;
-        this.tagService = tagService;
         this.userService = userService;
     }
 

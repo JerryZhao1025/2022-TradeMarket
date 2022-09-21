@@ -1,13 +1,10 @@
 package com.laioffer.tradeMarket.service;
 
-import com.laioffer.tradeMarket.dao.PostDao;
 import com.laioffer.tradeMarket.dao.TagDao;
 import com.laioffer.tradeMarket.entity.Post;
-import com.laioffer.tradeMarket.entity.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Set;
 
 @Service

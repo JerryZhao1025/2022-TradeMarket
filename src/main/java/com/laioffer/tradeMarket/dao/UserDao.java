@@ -16,8 +16,12 @@ import javax.persistence.criteria.Root;
 
 @Repository
 public class UserDao {
+    private final SessionFactory sessionFactory;
+
     @Autowired
-    private SessionFactory sessionFactory;
+    public UserDao(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     public void signUp(User user) throws Exception {
         Authorities authorities = new Authorities();
