@@ -26,7 +26,7 @@ public class User implements Serializable {
     private String phoneNumber;
     private boolean enabled;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     private Set<Post> postList;
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 //    private List<Post> myCart;
@@ -34,7 +34,7 @@ public class User implements Serializable {
 //    private List<Post> favoriteList;
     @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     private Set<Order> purchaseHistory;
-    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     private Set<Order> sellingHistory;
 
     public String getUsername() {

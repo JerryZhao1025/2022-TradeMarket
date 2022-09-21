@@ -1,11 +1,12 @@
 package com.laioffer.tradeMarket.dao;
 
-import com.laioffer.tradeMarket.entity.Authorities;
 import com.laioffer.tradeMarket.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.laioffer.tradeMarket.entity.Authorities;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -15,8 +16,12 @@ import javax.persistence.criteria.Root;
 
 @Repository
 public class UserDao {
+    private final SessionFactory sessionFactory;
+
     @Autowired
-    private SessionFactory sessionFactory;
+    public UserDao(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     public void signUp(User user) throws Exception {
         Authorities authorities = new Authorities();
@@ -44,24 +49,15 @@ public class UserDao {
     }
 
     public User getUserByUsername(String username) {
-        User user = null;
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
-            session.beginTransaction();
-            user = session.get(User.class, username);
-            session.getTransaction().commit();
+        try (Session session = sessionFactory.openSession()) {
+            User user = session.get(User.class, username);
+            if ( user != null) {
+                return user;
+            }
         } catch (Exception exception) {
             exception.printStackTrace();
-            if (session != null) {
-                session.getTransaction().rollback();
-            }
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
-        return user;
+        return null;
     }
 
     public User getUserByEmail(String email) {

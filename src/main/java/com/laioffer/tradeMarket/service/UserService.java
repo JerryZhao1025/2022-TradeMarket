@@ -18,8 +18,8 @@ public class UserService {
         if (existingUser != null) {
             throw new Exception("Username already exists!");
         }
-        existingUser = getUserByEmail(user.getEmail());
-        if (existingUser != null) {
+
+        if (userDao.getUserByEmail(user.getEmail()) != null) { // exist current email
             throw new Exception("Email already exists!");
         }
 
@@ -36,11 +36,15 @@ public class UserService {
     }
 
     public User getUser(String username) {
-        return userDao.getUserByUsername(username);
+        return userDao.getUserByUsername(username); // get all user info
     }
 
-    public User getUserByEmail(String email) {
-        return userDao.getUserByEmail(email);
+    public User getPartUserInfo(String username) {
+        User user = userDao.getUserByUsername(username); // get all user info
+        // remove part information
+        user.setPassword(null);
+        user.setSellingHistory(null);
+        user.setPurchaseHistory(null);
+        return user;
     }
-
 }
