@@ -59,7 +59,6 @@ public class UserDao {
     public User getUserByEmail(String email) {
         User user = null;
         Session session = null;
-
         try {
             session = sessionFactory.openSession();
             CriteriaBuilder builder = session.getCriteriaBuilder();
