@@ -121,7 +121,6 @@ public class UserController {
         String username = tokenService.getUsernameFromToken(token);
         User user = userService.getUser(username);
         Post post = postService.getPost(postID);
-        orderService.newOrder(user, post);
-        return null;
+        return orderService.newOrder(user, post);
     }
 }

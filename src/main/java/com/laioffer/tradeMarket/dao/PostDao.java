@@ -33,7 +33,7 @@ public class PostDao {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return new Post();
+        return null;
     }
 
     public Post addPost(Post newPost) {
