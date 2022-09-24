@@ -24,8 +24,11 @@ public class TagService {
         tagDao.removeTag(tagId, postId);
     }
 
+<<<<<<< HEAD
     public Set<Post> getAllPosts(int tagId){
         return tagDao.getAllPostsByTagId(tagId);
     }
 
+=======
+>>>>>>> 02a8e9a (supports searching posts with a up limit)
 }

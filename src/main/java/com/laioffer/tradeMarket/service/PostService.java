@@ -1,6 +1,7 @@
 package com.laioffer.tradeMarket.service;
 
 import com.laioffer.tradeMarket.dao.PostDao;
+import com.laioffer.tradeMarket.dao.TagDao;
 import com.laioffer.tradeMarket.dao.UserDao;
 import com.laioffer.tradeMarket.entity.Post;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +13,13 @@ import java.util.Set;
 public class PostService {
     private final PostDao postDao;
     private final UserDao userDao;
+    private final TagDao tagDao;
 
     @Autowired
-    public PostService(PostDao postDao, UserDao userDao) {
+    public PostService(PostDao postDao, UserDao userDao, TagDao tagDao) {
         this.userDao = userDao;
         this.postDao = postDao;
+        this.tagDao = tagDao;
     }
 
     public Post getPost(int postID) {
@@ -34,6 +37,10 @@ public class PostService {
     public void deletePost(int postID) {
         // 我认为这里还是需要用一下Authentication的方法进行验证，如果没有验证的话，就有可能所有人都可以通过一个组件随意删除网站上的post
         postDao.deletePost(postID);
+    }
+
+    public Set<Post> getAllPostsByTag(int tagId, int returnedPostNum){
+        return tagDao.getAllPostsByTagId(tagId), returnedPostNum;
     }
 
     public Set<Post> getAllPostsByKeyword(String word) {

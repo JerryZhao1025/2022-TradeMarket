@@ -23,32 +23,29 @@ public class SearchController {
         this.postService = postService;
         this.tagService = tagService;
     }
-
-   @RequestMapping(value = {"/searchPosts"}, method = RequestMethod.GET)
-   @ResponseStatus(value = HttpStatus.OK)
-   @ResponseBody
-   public Set<Post> getPostsByTag(@RequestParam(value = "tag", required = false) Optional<Integer> optionalTagId,
+    @RequestMapping(value = {"/searchPosts"}, method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public List<Post> getPostsByTag(@RequestParam(value = "tag", required = false) Optional<Integer> optionalTagId,
                                   @RequestParam(value = "keyword", required = false) Optional<String> optionalKeyWord,
                                   @RequestParam(value = "quantity", required = false) Optional<Integer> optionalPostQuantity,
                                   HttpServletResponse response) {
-
         int DEFAULT_POST_NUM = 10;
         int returnedPostNum = optionalPostQuantity.orElse(DEFAULT_POST_NUM);
 
-       if (optionalTagId.isPresent() && optionalKeyWord.isPresent()) {
-           int tagId = optionalTagId.get();
-           String keyword = optionalKeyWord.get();
-           return postService.getPostsByTagAndKeyword(tagId, keyword);
-       } else if (optionalTagId.isPresent()) {
+        if (optionalTagId.isPresent() && optionalKeyWord.isPresent()) {
             int tagId = optionalTagId.get();
-            return tagService.getAllPosts(tagId); // TODO: Need to controller the total return posts number.
+            String keyword = optionalKeyWord.get();
+            return postService.getPostsByTagAndKeyword(tagId, keyword, returnedPostNum);
+        } else if (optionalTagId.isPresent()) {
+            int tagId = optionalTagId.get();
+            return postService.getAllPostsByTag(tagId, returnedPostNum);
         } else if (optionalKeyWord.isPresent()) {
-            String keyword = optionalKeyWord.get(); // TODO: Need to controller the total return posts number.
-            return new HashSet<>(postService.getAllPostsByKeyword(keyword));
-        } else { // search by default? return top 10
-            // TODO: Need to controller the total return posts number.
-            return null;
+            String keyword = optionalKeyWord.get();
+            return postService.getAllPostsByKeyword(keyword, returnedPostNum);
+        } else {
+            return postService.getAllPostsByKeyword("", returnedPostNum);
         }
-   }
+    }
 }
     
