@@ -3,8 +3,10 @@ package com.laioffer.tradeMarket.controller;
 import com.laioffer.tradeMarket.entity.Media;
 import com.laioffer.tradeMarket.entity.Post;
 
+import com.laioffer.tradeMarket.entity.User;
 import com.laioffer.tradeMarket.service.PostService;
 import com.laioffer.tradeMarket.service.TagService;
+import com.laioffer.tradeMarket.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -16,42 +18,48 @@ import javax.servlet.http.HttpServletResponse;
 public class PostController {
     private final PostService postService;
     private final TagService tagService;
+    private final TokenService tokenService;
 
     @Autowired
-    public PostController(PostService postService, TagService tagService) {
+    public PostController(PostService postService, TagService tagService, TokenService tokenService) {
         this.postService = postService;
         this.tagService = tagService;
+        this.tokenService = tokenService;
     }
 
     @RequestMapping(value = {"/post/newPost"}, method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
     @ResponseBody
-    public Post addPost(@RequestBody Post post,
+    public Post addPost(@RequestBody Post post, @RequestHeader("Authorization") String token,
                          HttpServletResponse response) {
-        // TODO: fill in user information into the post
-        postService.addPost(post);
-        return post;
+        if (!tokenService.verify(token)) {
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            return null;
+        }
+        User user = tokenService.getUserFromToken(token);
+        return postService.addPost(post, user);
     }
 
     @RequestMapping(value = {"/post/{postID}/edit"}, method = RequestMethod.PATCH)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public void editPost(@PathVariable("postID") int postID, @RequestBody Post newpost,
+    @ResponseBody
+    public Post editPost(@PathVariable("postID") int postID, @RequestBody Post newpost,
                          HttpServletResponse response) {
-        postService.editPost(postID, newpost);
+        return postService.editPost(postID, newpost);
         // 目前仅支持对post的Title, Description和Price做改动
     }
 
     @RequestMapping(value = {"/post/{postID}/delete"}, method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.OK)
-    public void deletePost(@PathVariable("postID") int postID, HttpServletResponse response) {
-        postService.deletePost(postID);
-
+    @ResponseBody
+    public Post deletePost(@PathVariable("postID") int postID, HttpServletResponse response) {
+        return postService.deletePost(postID);
     }
 
     @RequestMapping(value = {"/post/{postID}"}, method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public Post editPost(@PathVariable("postID") int postID, HttpServletResponse response) {
+    public Post getPost(@PathVariable("postID") int postID, HttpServletResponse response) {
         return postService.getPost(postID);
     }
     // =========================坚决不要动这下面的code，让做media的同学自己搞，不然可能会有冲突=============================

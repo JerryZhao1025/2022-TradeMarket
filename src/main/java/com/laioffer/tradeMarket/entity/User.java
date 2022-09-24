@@ -26,15 +26,15 @@ public class User implements Serializable {
     private String phoneNumber;
     private boolean enabled;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Post> postList;
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 //    private List<Post> myCart;
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 //    private List<Post> favoriteList;
-    @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL)
     private List<Order> purchaseHistory;
-    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
     private List<Order> sellingHistory;
 
     public String getUsername() {

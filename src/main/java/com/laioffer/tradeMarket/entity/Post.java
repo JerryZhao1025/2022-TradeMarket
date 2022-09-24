@@ -1,6 +1,8 @@
 package com.laioffer.tradeMarket.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
@@ -37,7 +39,7 @@ public class Post implements Serializable{
     private List<Media> medias;
 
     @ManyToOne
-    @JsonIgnore
+    @JsonIgnoreProperties({"postList", "purchaseHistory", "sellingHistory", "password"})
     private User owner;
 
     @ManyToMany

@@ -5,9 +5,12 @@ import com.laioffer.tradeMarket.dao.TagDao;
 import com.laioffer.tradeMarket.dao.UserDao;
 import com.laioffer.tradeMarket.entity.Post;
 import com.laioffer.tradeMarket.entity.Tag;
+import com.laioffer.tradeMarket.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -17,8 +20,6 @@ import java.util.Set;
 public class PostService {
     private final PostDao postDao;
     private final UserDao userDao;
-    private final TagDao tagDao;
-
     private final TagDao tagDao;
 
     @Autowired
@@ -32,17 +33,21 @@ public class PostService {
         return postDao.getPostById(postID);
     }
 
-    public void addPost(Post post) {
-        postDao.addPost(post);
+    public Post addPost(Post post, User user) {
+        post.setPostTime(Timestamp.from(Instant.now()));
+        post.setMedias(new ArrayList<>());
+        post.setAppendTags(new ArrayList<>());
+        post.setOwner(user);
+        return postDao.addPost(post);
     }
 
-    public void editPost(int postID, Post newPost) {
-        postDao.editPost(postID, newPost);
+    public Post editPost(int postID, Post newPost) {
+        return postDao.editPost(postID, newPost);
     }
 
-    public void deletePost(int postID) {
+    public Post deletePost(int postID) {
         // 我认为这里还是需要用一下Authentication的方法进行验证，如果没有验证的话，就有可能所有人都可以通过一个组件随意删除网站上的post
-        postDao.deletePost(postID);
+        return postDao.deletePost(postID);
     }
 
 

@@ -34,13 +34,14 @@ public class PostDao {
         return new Post();
     }
 
-    public void addPost(Post newPost) {
+    public Post addPost(Post newPost) {
         Session session = null;
         try{
             session = sessionFactory.openSession();
             session.beginTransaction();
             session.save(newPost);
             session.getTransaction().commit();
+            return newPost;
         } catch (Exception ex){
             ex.printStackTrace();
             if(session != null) session.getTransaction().rollback();
@@ -49,9 +50,10 @@ public class PostDao {
                 session.close();
             }
         }
+        return null;
     }
 
-    public void editPost(int postID, Post newPost) {
+    public Post editPost(int postID, Post newPost) {
         Post post = getPostById(postID);
         // 改变post底下的所有参数(仅用户可以改变的部分)
         post.setTitle(newPost.getTitle());
@@ -78,9 +80,10 @@ public class PostDao {
                 session.close();
             }
         }
+        return post;
     }
 
-    public void deletePost(int postID) {
+    public Post deletePost(int postID) {
         Post post = getPostById(postID);
         Session session = null;
         try{
@@ -99,6 +102,7 @@ public class PostDao {
                 session.close();
             }
         }
+        return post;
     }
 
     //needs to update
