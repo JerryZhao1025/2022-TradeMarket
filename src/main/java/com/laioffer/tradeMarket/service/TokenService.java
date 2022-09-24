@@ -55,10 +55,9 @@ public class TokenService {
         }
     }
 
-    public User getUserFromToken(String token) throws JwtException{
+    public String getUsernameFromToken(String token) throws JwtException{
         token = token.substring(7);
         Map<String, Object> claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
-        String username = (String)claims.get("username");
-        return userService.getUser(username);
+        return (String)claims.get("username");
     }
 }

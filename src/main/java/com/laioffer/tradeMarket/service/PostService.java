@@ -50,6 +50,10 @@ public class PostService {
         return postDao.deletePost(postID);
     }
 
+    public boolean verifyPost(int postId, String username){
+        Post post = getPost(postId);
+        return post.getOwner().getUsername().equals(username);
+    }
 
     public List<Post> getAllPostsByTag(int tagId) {
         return tagDao.getAllPostsByTagId(tagId);
