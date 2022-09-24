@@ -21,6 +21,7 @@ public class SearchController {
         this.postService = postService;
         this.tagService = tagService;
     }
+
     @RequestMapping(value = {"/searchPosts"}, method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody

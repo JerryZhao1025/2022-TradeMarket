@@ -1,15 +1,13 @@
 package com.laioffer.tradeMarket.dao;
 
 import com.laioffer.tradeMarket.entity.Post;
+import com.laioffer.tradeMarket.entity.Tag;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,16 +118,39 @@ public class PostDao {
         return new ArrayList<>();
     }
 
-    public List<Post> getPostsByTagAndKeyword(int tagID, String keyword) {
+    public List<Post> getPostsByTagAndKeyword(int tagId, String keyword) {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Post> criteria = builder.createQuery(Post.class);
             Root<Post> posts = criteria.from(Post.class);
+//            List<Predicate> predicates = new ArrayList<>();
+//            for (int tagId : tags){
+//                Subquery<Integer> subquery =  criteria.subquery(Integer.class);
+//                Root<Post> subPost = subquery.from(Post.class);
+//                Join<Tag, Post> subTag = subPost.join("appendTags");
+//
+//                subquery
+//                        .select(subPost.get("id"))
+//                        .where(builder.equal(subTag.get("id"), tagId));
+//
+//                predicates.add(builder.in(posts.get("id")).value(subquery));
+//            }
+
+            Subquery<Integer> subquery =  criteria.subquery(Integer.class);
+            Root<Post> subPost = subquery.from(Post.class);
+            Join<Tag, Post> subTag = subPost.join("appendTags");
+
+            subquery
+                    .select(subPost.get("id"))
+                    .where(builder.equal(subTag.get("id"), tagId));
+            Predicate tagMatch = builder.in(posts.get("id")).value(subquery);
+
             Predicate titleMatch = builder.like(posts.get("title"), "%" + keyword + "%");
             Predicate descriptionMatch = builder.like(posts.get("description"), "%" + keyword + "%");
             criteria.where(builder.or(titleMatch, descriptionMatch));
-//            criteria.where()
 
+            Predicate allPostsByKeyword = builder.or(titleMatch, descriptionMatch);
+            criteria.where(builder.and(tagMatch, allPostsByKeyword));
 
             // 然后把这个query给session运行并返回结果
             return session.createQuery(criteria).getResultList();

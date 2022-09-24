@@ -4,9 +4,12 @@ import com.laioffer.tradeMarket.dao.PostDao;
 import com.laioffer.tradeMarket.dao.TagDao;
 import com.laioffer.tradeMarket.dao.UserDao;
 import com.laioffer.tradeMarket.entity.Post;
+import com.laioffer.tradeMarket.entity.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -14,6 +17,8 @@ import java.util.Set;
 public class PostService {
     private final PostDao postDao;
     private final UserDao userDao;
+    private final TagDao tagDao;
+
     private final TagDao tagDao;
 
     @Autowired
@@ -49,7 +54,7 @@ public class PostService {
         return postDao.getAllPostsByKeyword(word);
     }
 
-    public List<Post> getPostsByTagAndKeyword(int tagID, String keyword) {
-        return postDao.getPostsByTagAndKeyword(tagID, keyword);
+    public List<Post> getPostsByTagAndKeyword(int tagId, String keyword) {
+        return getPostsByTagAndKeyword(tagId, keyword);
     }
 }

@@ -15,7 +15,7 @@ public class Tag implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @ManyToMany(mappedBy = "appendTags", fetch=FetchType.EAGER)
+    @ManyToMany(mappedBy = "appendTags")
     private List<Post> posts = new ArrayList<>();
 
     private String tagName;
