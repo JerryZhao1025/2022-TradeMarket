@@ -151,6 +151,7 @@ public class PostDao {
 
             Predicate titleMatch = builder.like(posts.get("title"), "%" + keyword + "%");
             Predicate descriptionMatch = builder.like(posts.get("description"), "%" + keyword + "%");
+
             criteria.where(builder.or(titleMatch, descriptionMatch));
 
             Predicate allPostsByKeyword = builder.or(titleMatch, descriptionMatch);
