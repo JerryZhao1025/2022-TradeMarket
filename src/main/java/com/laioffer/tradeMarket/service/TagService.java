@@ -16,7 +16,7 @@ public class TagService {
         this.tagDao = tagDao;
     }
 
-    public void addTag(int tagId, int postId) {
+    public void appendTag(int tagId, int postId) {
         tagDao.addTag(tagId, postId);
     }
 

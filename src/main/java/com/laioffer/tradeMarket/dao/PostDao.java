@@ -119,4 +119,22 @@ public class PostDao {
         }
         return new HashSet<>();
     }
+
+    public Set<Post> getPostsByTagAndKeyword(int tagID, String keyword) {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Post> criteria = builder.createQuery(Post.class);
+            Root<Post> posts = criteria.from(Post.class);
+            Predicate titleMatch = builder.like(posts.get("title"), "%" + keyword + "%");
+            Predicate descriptionMatch = builder.like(posts.get("description"), "%" + keyword + "%");
+            criteria.where(builder.or(titleMatch, descriptionMatch));
+            criteria.where()
+
+            // 然后把这个query给session运行并返回结果
+            return new HashSet<>(session.createQuery(criteria).getResultList());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new HashSet<>();
+    }
 }

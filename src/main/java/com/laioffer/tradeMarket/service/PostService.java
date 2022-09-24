@@ -40,4 +40,7 @@ public class PostService {
         return postDao.getAllPostsByKeyword(word);
     }
 
+    public Set<Post> getPostsByTagAndKeyword(int tagID, String keyword) {
+        return postDao.getPostsByTagAndKeyword(tagID, keyword);
+    }
 }

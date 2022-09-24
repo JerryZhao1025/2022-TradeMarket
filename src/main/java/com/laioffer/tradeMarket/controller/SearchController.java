@@ -35,7 +35,11 @@ public class SearchController {
         int DEFAULT_POST_NUM = 10;
         int returnedPostNum = optionalPostQuantity.orElse(DEFAULT_POST_NUM);
 
-        if (optionalTagId.isPresent()) {
+       if (optionalTagId.isPresent() && optionalKeyWord.isPresent()) {
+           int tagId = optionalTagId.get();
+           String keyword = optionalKeyWord.get();
+           return postService.getPostsByTagAndKeyword(tagId, keyword);
+       } else if (optionalTagId.isPresent()) {
             int tagId = optionalTagId.get();
             return tagService.getAllPosts(tagId); // TODO: Need to controller the total return posts number.
         } else if (optionalKeyWord.isPresent()) {
