@@ -1,9 +1,11 @@
 package com.laioffer.tradeMarket.service;
 
+import com.laioffer.tradeMarket.entity.User;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -14,9 +16,17 @@ import java.util.Map;
 
 @Service
 public class TokenService {
-    String tokenKey = "This is our key of FLAGCAMP";
 
+    private final UserService userService;
+
+    @Autowired
+    public TokenService (UserService userService) {
+        this.userService = userService;
+    }
+
+    String tokenKey = "This is our key of FLAGCAMP";
     Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+
     public String getJWTToken(String username) throws IOException {
         String tokenKey = "This is our key of FLAGCAMP";
         Map<String, Object> claims = new HashMap<>();
@@ -43,5 +53,11 @@ public class TokenService {
             return false;
             //don't trust the JWT!
         }
+    }
+
+    public String getUsernameFromToken(String token) throws JwtException{
+        token = token.substring(7);
+        Map<String, Object> claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
+        return (String)claims.get("username");
     }
 }

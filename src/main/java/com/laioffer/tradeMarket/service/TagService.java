@@ -2,9 +2,11 @@ package com.laioffer.tradeMarket.service;
 
 import com.laioffer.tradeMarket.dao.TagDao;
 import com.laioffer.tradeMarket.entity.Post;
+import com.laioffer.tradeMarket.entity.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -16,7 +18,7 @@ public class TagService {
         this.tagDao = tagDao;
     }
 
-    public void addTag(int tagId, int postId) {
+    public void appendTag(int tagId, int postId) {
         tagDao.addTag(tagId, postId);
     }
 
@@ -28,4 +30,11 @@ public class TagService {
         return tagDao.getAllPostsByTagId(tagId);
     }
 
+    public Set<Tag> getAllTags() {
+        Set<Tag> tags = tagDao.getAllTags();
+        for (Tag tag : tags) {
+            tag.setPosts(null);
+        }
+        return tags;
+    }
 }

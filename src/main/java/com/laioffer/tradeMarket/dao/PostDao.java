@@ -1,16 +1,16 @@
 package com.laioffer.tradeMarket.dao;
 
 import com.laioffer.tradeMarket.entity.Post;
+import com.laioffer.tradeMarket.entity.Tag;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Repository
@@ -33,16 +33,17 @@ public class PostDao {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return new Post();
+        return null;
     }
 
-    public void addPost(Post newPost) {
+    public Post addPost(Post newPost) {
         Session session = null;
         try{
             session = sessionFactory.openSession();
             session.beginTransaction();
             session.save(newPost);
             session.getTransaction().commit();
+            return newPost;
         } catch (Exception ex){
             ex.printStackTrace();
             if(session != null) session.getTransaction().rollback();
@@ -51,9 +52,10 @@ public class PostDao {
                 session.close();
             }
         }
+        return null;
     }
 
-    public void editPost(int postID, Post newPost) {
+    public Post editPost(int postID, Post newPost) {
         Post post = getPostById(postID);
         // 改变post底下的所有参数(仅用户可以改变的部分)
         post.setTitle(newPost.getTitle());
@@ -80,9 +82,10 @@ public class PostDao {
                 session.close();
             }
         }
+        return post;
     }
 
-    public void deletePost(int postID) {
+    public Post deletePost(int postID) {
         Post post = getPostById(postID);
         Session session = null;
         try{
@@ -101,6 +104,7 @@ public class PostDao {
                 session.close();
             }
         }
+        return post;
     }
 
     //needs to update
@@ -112,6 +116,49 @@ public class PostDao {
             Predicate titleMatch = builder.like(posts.get("title"), "%" + keyword + "%");
             Predicate descriptionMatch = builder.like(posts.get("description"), "%" + keyword + "%");
             criteria.where(builder.or(titleMatch, descriptionMatch));
+            // 然后把这个query给session运行并返回结果
+            return new HashSet<>(session.createQuery(criteria).getResultList());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new HashSet<>();
+    }
+
+    public Set<Post> getPostsByTagAndKeyword(int tagId, String keyword) {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Post> criteria = builder.createQuery(Post.class);
+            Root<Post> posts = criteria.from(Post.class);
+//            List<Predicate> predicates = new ArrayList<>();
+//            for (int tagId : tags){
+//                Subquery<Integer> subquery =  criteria.subquery(Integer.class);
+//                Root<Post> subPost = subquery.from(Post.class);
+//                Join<Tag, Post> subTag = subPost.join("appendTags");
+//
+//                subquery
+//                        .select(subPost.get("id"))
+//                        .where(builder.equal(subTag.get("id"), tagId));
+//
+//                predicates.add(builder.in(posts.get("id")).value(subquery));
+//            }
+
+            Subquery<Integer> subquery =  criteria.subquery(Integer.class);
+            Root<Post> subPost = subquery.from(Post.class);
+            Join<Tag, Post> subTag = subPost.join("appendTags");
+
+            subquery
+                    .select(subPost.get("id"))
+                    .where(builder.equal(subTag.get("id"), tagId));
+            Predicate tagMatch = builder.in(posts.get("id")).value(subquery);
+
+            Predicate titleMatch = builder.like(posts.get("title"), "%" + keyword + "%");
+            Predicate descriptionMatch = builder.like(posts.get("description"), "%" + keyword + "%");
+
+            criteria.where(builder.or(titleMatch, descriptionMatch));
+
+            Predicate allPostsByKeyword = builder.or(titleMatch, descriptionMatch);
+            criteria.where(builder.and(tagMatch, allPostsByKeyword));
+
             // 然后把这个query给session运行并返回结果
             return new HashSet<>(session.createQuery(criteria).getResultList());
         } catch (Exception ex) {

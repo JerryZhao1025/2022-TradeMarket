@@ -4,6 +4,7 @@ import org.springframework.stereotype.Indexed;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,10 +29,7 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     private Set<Post> postList;
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-//    private List<Post> myCart;
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-//    private List<Post> favoriteList;
+
     @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     private Set<Order> purchaseHistory;
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, fetch=FetchType.EAGER)

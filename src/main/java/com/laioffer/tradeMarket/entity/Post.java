@@ -1,12 +1,16 @@
 package com.laioffer.tradeMarket.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -37,7 +41,7 @@ public class Post implements Serializable{
     private Set<Media> medias;
 
     @ManyToOne
-    @JsonIgnore
+    @JsonIgnoreProperties({"postList", "purchaseHistory", "sellingHistory", "password"})
     private User owner;
 
     @ManyToMany
@@ -97,6 +101,10 @@ public class Post implements Serializable{
         this.price = price;
     }
 
+    public Order getOrder() {
+        return order;
+    }
+
     public Set<Media> getMedias() {
         return medias;
     }
@@ -111,10 +119,6 @@ public class Post implements Serializable{
 
     public void setAppendTags(Set<Tag> appendTags) {
         this.appendTags = appendTags;
-    }
-
-    public Order getOrder() {
-        return order;
     }
 
     public void setOrder(Order order) {
