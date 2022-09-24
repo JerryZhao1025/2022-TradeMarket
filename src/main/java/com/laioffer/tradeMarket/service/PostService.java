@@ -39,8 +39,8 @@ public class PostService {
         postDao.deletePost(postID);
     }
 
-    public Set<Post> getAllPostsByTag(int tagId, int returnedPostNum){
-        return tagDao.getAllPostsByTagId(tagId), returnedPostNum;
+    public Set<Post> getAllPostsByTag(int tagId){
+        return tagDao.getAllPostsByTagId(tagId);
     }
 
     public Set<Post> getAllPostsByKeyword(String word) {

@@ -26,25 +26,21 @@ public class SearchController {
     @RequestMapping(value = {"/searchPosts"}, method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public List<Post> getPostsByTag(@RequestParam(value = "tag", required = false) Optional<Integer> optionalTagId,
-                                  @RequestParam(value = "keyword", required = false) Optional<String> optionalKeyWord,
-                                  @RequestParam(value = "quantity", required = false) Optional<Integer> optionalPostQuantity,
-                                  HttpServletResponse response) {
-        int DEFAULT_POST_NUM = 10;
-        int returnedPostNum = optionalPostQuantity.orElse(DEFAULT_POST_NUM);
+    public Set<Post> getPostsByTag(@RequestParam(value = "tag", required = false) Optional<Integer> optionalTagId,
+                                  @RequestParam(value = "keyword", required = false) Optional<String> optionalKeyWord) {
 
         if (optionalTagId.isPresent() && optionalKeyWord.isPresent()) {
             int tagId = optionalTagId.get();
             String keyword = optionalKeyWord.get();
-            return postService.getPostsByTagAndKeyword(tagId, keyword, returnedPostNum);
+            return postService.getPostsByTagAndKeyword(tagId, keyword);
         } else if (optionalTagId.isPresent()) {
             int tagId = optionalTagId.get();
-            return postService.getAllPostsByTag(tagId, returnedPostNum);
+            return postService.getAllPostsByTag(tagId);
         } else if (optionalKeyWord.isPresent()) {
             String keyword = optionalKeyWord.get();
-            return postService.getAllPostsByKeyword(keyword, returnedPostNum);
+            return postService.getAllPostsByKeyword(keyword);
         } else {
-            return postService.getAllPostsByKeyword("", returnedPostNum);
+            return postService.getAllPostsByKeyword("");
         }
     }
 }
