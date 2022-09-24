@@ -60,6 +60,6 @@ public class PostService {
     }
 
     public List<Post> getPostsByTagAndKeyword(int tagId, String keyword) {
-        return getPostsByTagAndKeyword(tagId, keyword);
+        return postDao.getPostsByTagAndKeyword(tagId, keyword);
     }
 }
