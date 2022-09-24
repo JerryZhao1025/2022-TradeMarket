@@ -6,7 +6,7 @@ import com.laioffer.tradeMarket.entity.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.List;
 
 @Service
 public class PostService {
@@ -36,11 +36,11 @@ public class PostService {
         postDao.deletePost(postID);
     }
 
-    public Set<Post> getAllPostsByKeyword(String word) {
+    public List<Post> getAllPostsByKeyword(String word) {
         return postDao.getAllPostsByKeyword(word);
     }
 
-    public Set<Post> getPostsByTagAndKeyword(int tagID, String keyword) {
+    public List<Post> getPostsByTagAndKeyword(int tagID, String keyword) {
         return postDao.getPostsByTagAndKeyword(tagID, keyword);
     }
 }

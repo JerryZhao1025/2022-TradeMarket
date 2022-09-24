@@ -9,9 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class SearchController {
@@ -27,7 +25,7 @@ public class SearchController {
    @RequestMapping(value = {"/searchPosts"}, method = RequestMethod.GET)
    @ResponseStatus(value = HttpStatus.OK)
    @ResponseBody
-   public Set<Post> getPostsByTag(@RequestParam(value = "tag", required = false) Optional<Integer> optionalTagId,
+   public List<Post> getPostsByTag(@RequestParam(value = "tag", required = false) Optional<Integer> optionalTagId,
                                   @RequestParam(value = "keyword", required = false) Optional<String> optionalKeyWord,
                                   @RequestParam(value = "quantity", required = false) Optional<Integer> optionalPostQuantity,
                                   HttpServletResponse response) {
@@ -38,7 +36,8 @@ public class SearchController {
        if (optionalTagId.isPresent() && optionalKeyWord.isPresent()) {
            int tagId = optionalTagId.get();
            String keyword = optionalKeyWord.get();
-           return postService.getPostsByTagAndKeyword(tagId, keyword);
+           List<Post> allPosts = postService.getPostsByTagAndKeyword(tagId, keyword);
+           return allPostsInList.subList(0, returnedPostNum);
        } else if (optionalTagId.isPresent()) {
             int tagId = optionalTagId.get();
             return tagService.getAllPosts(tagId); // TODO: Need to controller the total return posts number.

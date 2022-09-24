@@ -6,8 +6,8 @@ import org.hibernate.annotations.Proxy;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -34,7 +34,7 @@ public class Post implements Serializable{
     private Order order;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    private Set<Media> medias;
+    private List<Media> medias;
 
     @ManyToOne
     @JsonIgnore
@@ -47,7 +47,7 @@ public class Post implements Serializable{
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     @JsonIgnore
-    private Set<Tag> appendTags = new HashSet<>();
+    private List<Tag> appendTags = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -97,24 +97,24 @@ public class Post implements Serializable{
         this.price = price;
     }
 
-    public Set<Media> getMedias() {
+    public Order getOrder() {
+        return order;
+    }
+
+    public List<Media> getMedias() {
         return medias;
     }
 
-    public void setMedias(Set<Media> medias) {
+    public void setMedias(List<Media> medias) {
         this.medias = medias;
     }
 
-    public Set<Tag> getAppendTags() {
+    public List<Tag> getAppendTags() {
         return appendTags;
     }
 
-    public void setAppendTags(Set<Tag> appendTags) {
+    public void setAppendTags(List<Tag> appendTags) {
         this.appendTags = appendTags;
-    }
-
-    public Order getOrder() {
-        return order;
     }
 
     public void setOrder(Order order) {

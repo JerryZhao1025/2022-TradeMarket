@@ -4,7 +4,7 @@ import org.springframework.stereotype.Indexed;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Indexed
@@ -27,15 +27,15 @@ public class User implements Serializable {
     private boolean enabled;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    private Set<Post> postList;
+    private List<Post> postList;
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 //    private List<Post> myCart;
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 //    private List<Post> favoriteList;
     @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    private Set<Order> purchaseHistory;
+    private List<Order> purchaseHistory;
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    private Set<Order> sellingHistory;
+    private List<Order> sellingHistory;
 
     public String getUsername() {
         return username;
@@ -93,11 +93,11 @@ public class User implements Serializable {
         this.enabled = enabled;
     }
 
-    public Set<Post> getPostList() {
+    public List<Post> getPostList() {
         return postList;
     }
 
-    public void setPostList(Set<Post> postList) {
+    public void setPostList(List<Post> postList) {
         this.postList = postList;
     }
 
@@ -117,19 +117,19 @@ public class User implements Serializable {
 //        this.favoriteList = favoriteList;
 //    }
 
-    public Set<Order> getPurchaseHistory() {
+    public List<Order> getPurchaseHistory() {
         return purchaseHistory;
     }
 
-    public void setPurchaseHistory(Set<Order> purchaseHistory) {
+    public void setPurchaseHistory(List<Order> purchaseHistory) {
         this.purchaseHistory = purchaseHistory;
     }
 
-    public Set<Order> getSellingHistory() {
+    public List<Order> getSellingHistory() {
         return sellingHistory;
     }
 
-    public void setSellingHistory(Set<Order> sellingHistory) {
+    public void setSellingHistory(List<Order> sellingHistory) {
         this.sellingHistory = sellingHistory;
     }
 }

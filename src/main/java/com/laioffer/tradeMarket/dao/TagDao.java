@@ -7,8 +7,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class TagDao {
@@ -75,7 +75,7 @@ public class TagDao {
         }
     }
 
-    public Set<Post> getAllPostsByTagId(int tagId){
+    public List<Post> getAllPostsByTagId(int tagId){
         Session session = null;
         try {
             session = sessionFactory.openSession();
@@ -90,6 +90,6 @@ public class TagDao {
                 session.close();
             }
         }
-        return new HashSet<>();
+        return new ArrayList<>();
     }
 }

@@ -5,7 +5,7 @@ import com.laioffer.tradeMarket.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 @Service
 public class UserService {
@@ -24,9 +24,9 @@ public class UserService {
         }
 
         user.setEnabled(true);
-        user.setPostList(new HashSet<>());
-        user.setPurchaseHistory(new HashSet<>());
-        user.setSellingHistory(new HashSet<>());
+        user.setPostList(new ArrayList<>());
+        user.setPurchaseHistory(new ArrayList<>());
+        user.setSellingHistory(new ArrayList<>());
         try {
             userDao.signUp(user);
         } catch (Exception exception) {

@@ -10,8 +10,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class PostDao {
@@ -104,7 +104,7 @@ public class PostDao {
     }
 
     //needs to update
-    public Set<Post> getAllPostsByKeyword(String keyword) {
+    public List<Post> getAllPostsByKeyword(String keyword) {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Post> criteria = builder.createQuery(Post.class);
@@ -113,14 +113,14 @@ public class PostDao {
             Predicate descriptionMatch = builder.like(posts.get("description"), "%" + keyword + "%");
             criteria.where(builder.or(titleMatch, descriptionMatch));
             // 然后把这个query给session运行并返回结果
-            return new HashSet<>(session.createQuery(criteria).getResultList());
+            return session.createQuery(criteria).getResultList();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return new HashSet<>();
+        return new ArrayList<>();
     }
 
-    public Set<Post> getPostsByTagAndKeyword(int tagID, String keyword) {
+    public List<Post> getPostsByTagAndKeyword(int tagID, String keyword) {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Post> criteria = builder.createQuery(Post.class);
@@ -130,11 +130,12 @@ public class PostDao {
             criteria.where(builder.or(titleMatch, descriptionMatch));
             criteria.where()
 
+
             // 然后把这个query给session运行并返回结果
-            return new HashSet<>(session.createQuery(criteria).getResultList());
+            return session.createQuery(criteria).getResultList();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return new HashSet<>();
+        return new ArrayList<>();
     }
 }

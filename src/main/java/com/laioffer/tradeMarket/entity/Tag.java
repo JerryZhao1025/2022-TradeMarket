@@ -2,8 +2,8 @@ package com.laioffer.tradeMarket.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "allTags")
@@ -16,7 +16,7 @@ public class Tag implements Serializable {
     private int id;
 
     @ManyToMany(mappedBy = "appendTags", fetch=FetchType.EAGER)
-    private Set<Post> posts = new HashSet<>();
+    private List<Post> posts = new ArrayList<>();
 
     private String tagName;
 
@@ -28,11 +28,11 @@ public class Tag implements Serializable {
         this.id = id;
     }
 
-    public Set<Post> getPosts() {
+    public List<Post> getPosts() {
         return posts;
     }
 
-    public void setPosts(Set<Post> posts) {
+    public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
 
