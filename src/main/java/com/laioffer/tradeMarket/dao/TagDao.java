@@ -7,6 +7,12 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,6 +95,19 @@ public class TagDao {
             if (session != null ){
                 session.close();
             }
+        }
+        return new ArrayList<>();
+    }
+
+    public List<Tag> getAllTags() {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Tag> criteria = builder.createQuery(Tag.class);
+            Root<Tag> tags = criteria.from(Tag.class);
+            CriteriaQuery<Tag> all = criteria.select(tags);
+            return session.createQuery(all).getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         return new ArrayList<>();
     }
