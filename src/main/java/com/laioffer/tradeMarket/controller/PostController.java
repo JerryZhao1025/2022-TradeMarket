@@ -48,20 +48,6 @@ public class PostController {
 
     }
 
-    @RequestMapping(value = {"/post/{postID}/addTag/{tagID}"}, method = RequestMethod.POST)
-    @ResponseStatus(value = HttpStatus.OK)
-    public void addTag(@PathVariable("postID") int postId, @PathVariable("tagID") int tagId,
-                       HttpServletResponse response) {
-        tagService.appendTag(tagId, postId);
-    }
-
-    @RequestMapping(value = {"/post/{postID}/removeTag/{tagID}"}, method = RequestMethod.DELETE)
-    @ResponseStatus(value = HttpStatus.OK)
-    public void removeTag(@PathVariable("postID") int postId, @PathVariable("tagID") int tagId,
-                          HttpServletResponse response) {
-        tagService.removeTag(tagId, postId);
-    }
-
     @RequestMapping(value = {"/post/{postID}"}, method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody

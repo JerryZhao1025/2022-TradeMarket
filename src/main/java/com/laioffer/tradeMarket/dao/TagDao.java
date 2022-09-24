@@ -9,6 +9,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class TagDao {
@@ -91,5 +97,18 @@ public class TagDao {
             }
         }
         return new HashSet<>();
+    }
+
+    public List<Tag> getAllTags() {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Tag> criteria = builder.createQuery(Tag.class);
+            Root<Tag> tags = criteria.from(Tag.class);
+            CriteriaQuery<Tag> all = criteria.select(tags);
+            return session.createQuery(all).getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 }

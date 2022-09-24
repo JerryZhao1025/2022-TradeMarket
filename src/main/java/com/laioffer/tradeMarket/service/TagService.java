@@ -2,6 +2,7 @@ package com.laioffer.tradeMarket.service;
 
 import com.laioffer.tradeMarket.dao.TagDao;
 import com.laioffer.tradeMarket.entity.Post;
+import com.laioffer.tradeMarket.entity.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +25,11 @@ public class TagService {
         tagDao.removeTag(tagId, postId);
     }
 
-<<<<<<< HEAD
     public Set<Post> getAllPosts(int tagId){
         return tagDao.getAllPostsByTagId(tagId);
     }
 
-=======
->>>>>>> 02a8e9a (supports searching posts with a up limit)
+    public List<Tag> getAllTags() {
+        return tagDao.getAllTags();
+    }
 }
