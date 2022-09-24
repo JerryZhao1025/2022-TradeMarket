@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class TagService {
@@ -25,12 +26,12 @@ public class TagService {
         tagDao.removeTag(tagId, postId);
     }
 
-    public List<Post> getAllPosts(int tagId){
+    public Set<Post> getAllPosts(int tagId){
         return tagDao.getAllPostsByTagId(tagId);
     }
 
-    public List<Tag> getAllTags() {
-        List<Tag> tags = tagDao.getAllTags();
+    public Set<Tag> getAllTags() {
+        Set<Tag> tags = tagDao.getAllTags();
         for (Tag tag : tags) {
             tag.setPosts(null);
         }

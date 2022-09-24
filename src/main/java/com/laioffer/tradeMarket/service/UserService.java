@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 @Service
 public class UserService {
@@ -24,9 +25,9 @@ public class UserService {
         }
 
         user.setEnabled(true);
-        user.setPostList(new ArrayList<>());
-        user.setPurchaseHistory(new ArrayList<>());
-        user.setSellingHistory(new ArrayList<>());
+        user.setPostList(new HashSet<>());
+        user.setPurchaseHistory(new HashSet<>());
+        user.setSellingHistory(new HashSet<>());
         try {
             userDao.signUp(user);
         } catch (Exception exception) {

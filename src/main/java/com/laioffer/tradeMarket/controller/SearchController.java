@@ -25,7 +25,7 @@ public class SearchController {
     @RequestMapping(value = {"/searchPosts"}, method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public List<Post> getPostsByTag(@RequestParam(value = "tag", required = false) Optional<Integer> optionalTagId,
+    public Set<Post> getPostsByTag(@RequestParam(value = "tag", required = false) Optional<Integer> optionalTagId,
                                   @RequestParam(value = "keyword", required = false) Optional<String> optionalKeyWord) {
         if (optionalTagId.isPresent() && optionalKeyWord.isPresent()) {
             int tagId = optionalTagId.get();

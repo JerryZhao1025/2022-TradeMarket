@@ -36,8 +36,8 @@ public class PostService {
 
     public Post addPost(Post post, User user) {
         post.setPostTime(Timestamp.from(Instant.now()));
-        post.setMedias(new ArrayList<>());
-        post.setAppendTags(new ArrayList<>());
+        post.setMedias(new HashSet<>());
+        post.setAppendTags(new HashSet<>());
         post.setOwner(user);
         return postDao.addPost(post);
     }
@@ -56,15 +56,15 @@ public class PostService {
         return post.getOwner().getUsername().equals(username);
     }
 
-    public List<Post> getAllPostsByTag(int tagId) {
+    public Set<Post> getAllPostsByTag(int tagId) {
         return tagDao.getAllPostsByTagId(tagId);
     }
 
-    public List<Post> getAllPostsByKeyword(String word) {
+    public Set<Post> getAllPostsByKeyword(String word) {
         return postDao.getAllPostsByKeyword(word);
     }
 
-    public List<Post> getPostsByTagAndKeyword(int tagId, String keyword) {
+    public Set<Post> getPostsByTagAndKeyword(int tagId, String keyword) {
         return postDao.getPostsByTagAndKeyword(tagId, keyword);
     }
 }

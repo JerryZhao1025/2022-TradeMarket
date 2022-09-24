@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class TagController {
@@ -61,7 +62,7 @@ public class TagController {
     @RequestMapping(value = {"/tags"}, method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public List<Tag> getAllTags() {
+    public Set<Tag> getAllTags() {
         return tagService.getAllTags();
     }
 }

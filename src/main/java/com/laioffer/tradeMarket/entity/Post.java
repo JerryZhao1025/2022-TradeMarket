@@ -9,7 +9,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -36,7 +38,7 @@ public class Post implements Serializable{
     private Order order;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    private List<Media> medias;
+    private Set<Media> medias;
 
     @ManyToOne
     @JsonIgnoreProperties({"postList", "purchaseHistory", "sellingHistory", "password"})
@@ -49,7 +51,7 @@ public class Post implements Serializable{
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     @JsonIgnore
-    private List<Tag> appendTags = new ArrayList<>();
+    private Set<Tag> appendTags = new HashSet<>();
 
     public int getId() {
         return id;
@@ -103,19 +105,19 @@ public class Post implements Serializable{
         return order;
     }
 
-    public List<Media> getMedias() {
+    public Set<Media> getMedias() {
         return medias;
     }
 
-    public void setMedias(List<Media> medias) {
+    public void setMedias(Set<Media> medias) {
         this.medias = medias;
     }
 
-    public List<Tag> getAppendTags() {
+    public Set<Tag> getAppendTags() {
         return appendTags;
     }
 
-    public void setAppendTags(List<Tag> appendTags) {
+    public void setAppendTags(Set<Tag> appendTags) {
         this.appendTags = appendTags;
     }
 

@@ -9,7 +9,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class PostDao {
@@ -106,7 +108,7 @@ public class PostDao {
     }
 
     //needs to update
-    public List<Post> getAllPostsByKeyword(String keyword) {
+    public Set<Post> getAllPostsByKeyword(String keyword) {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Post> criteria = builder.createQuery(Post.class);
@@ -115,14 +117,14 @@ public class PostDao {
             Predicate descriptionMatch = builder.like(posts.get("description"), "%" + keyword + "%");
             criteria.where(builder.or(titleMatch, descriptionMatch));
             // 然后把这个query给session运行并返回结果
-            return session.createQuery(criteria).getResultList();
+            return new HashSet<>(session.createQuery(criteria).getResultList());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return new ArrayList<>();
+        return new HashSet<>();
     }
 
-    public List<Post> getPostsByTagAndKeyword(int tagId, String keyword) {
+    public Set<Post> getPostsByTagAndKeyword(int tagId, String keyword) {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Post> criteria = builder.createQuery(Post.class);
@@ -158,10 +160,10 @@ public class PostDao {
             criteria.where(builder.and(tagMatch, allPostsByKeyword));
 
             // 然后把这个query给session运行并返回结果
-            return session.createQuery(criteria).getResultList();
+            return new HashSet<>(session.createQuery(criteria).getResultList());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return new ArrayList<>();
+        return new HashSet<>();
     }
 }

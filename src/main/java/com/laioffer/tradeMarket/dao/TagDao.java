@@ -81,7 +81,7 @@ public class TagDao {
         }
     }
 
-    public List<Post> getAllPostsByTagId(int tagId){
+    public Set<Post> getAllPostsByTagId(int tagId){
         Session session = null;
         try {
             session = sessionFactory.openSession();
@@ -96,19 +96,19 @@ public class TagDao {
                 session.close();
             }
         }
-        return new ArrayList<>();
+        return new HashSet<>();
     }
 
-    public List<Tag> getAllTags() {
+    public Set<Tag> getAllTags() {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Tag> criteria = builder.createQuery(Tag.class);
             Root<Tag> tags = criteria.from(Tag.class);
             CriteriaQuery<Tag> all = criteria.select(tags);
-            return session.createQuery(all).getResultList();
+            return new HashSet<>(session.createQuery(all).getResultList());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return new ArrayList<>();
+        return new HashSet<>();
     }
 }
