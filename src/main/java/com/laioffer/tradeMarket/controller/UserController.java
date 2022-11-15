@@ -38,15 +38,18 @@ public class UserController {
         this.orderService = orderService;
     }
 
-    @RequestMapping(value = "/signin", method = RequestMethod.POST)
+    @RequestMapping(value = "/signin", method = RequestMethod.POST, produces="application/json")
+//    @ResponseBody
     public void signIn(@RequestBody User user, HttpServletResponse response) throws IOException {
         try {
             User userInDB = userService.getUser(user.getUsername());
             if (user.getPassword().equals(userInDB.getPassword())) {
-
                 response.setStatus(HttpStatus.CREATED.value());
+                response.setStatus(266);
                 String token = tokenService.getJWTToken(user.getUsername());
-                response.getOutputStream().println(token);
+                Map<String, Object> data = new HashMap<>();
+                data.put("token", token);
+                response.getOutputStream().println(objectMapper.writeValueAsString(data));
             } else {
                 // wrong password
                 response.setStatus(HttpStatus.CONFLICT.value());
@@ -54,7 +57,6 @@ public class UserController {
                 data.put("message", "Wrong Password");
                 response.getOutputStream().println(objectMapper.writeValueAsString(data));
             }
-
         } catch (Exception exception) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             Map<String, Object> data = new HashMap<>();
@@ -68,23 +70,6 @@ public class UserController {
     public void signUp(@RequestBody User user, HttpServletResponse response) throws IOException {
         try {
             userService.signUp(user);
-//            response.setStatus(HttpStatus.CREATED.value());
-
-//            Map<String, Object> claims = new HashMap<>();
-//            claims.put("username", user.getUsername());
-//            claims.put("password", user.getPassword());
-//
-//            Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-//            String jws = Jwts.builder().setClaims(claims).signWith(key).compact(); // token
-//
-//            Map<String, Object> claim2 = Jwts.parser().setSigningKey(key).parseClaimsJws(jws).getBody();
-//            System.out.println();
-//            System.out.println(claim2.get("password"));
-//
-//            response.getOutputStream().println(jws);
-//            response.getOutputStream().println((String)claim2.get("username"));
-//            response.getOutputStream().println((String)claim2.get("password"));
-
         } catch (Exception exception) {
             response.setStatus(HttpStatus.CONFLICT.value());
             Map<String, Object> data = new HashMap<>();
